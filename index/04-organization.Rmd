@@ -1,0 +1,27 @@
+# Organization {#organization}
+
+Your paper should be an evolving report on the project in all aspects developed so far, in the form of a draft scientific paper. It must be written in RMarkdown or LaTeX with figures included.
+
+Make sure all figures have font sizes and line widths set so that the final pdf versions are properly legible. Presentation (including correctness of mathematical equations, graphics, tables, citations and bibligraphy, as well as prose) should be pristine.
+
+All details of developments of models, code and examples/analyses must be clearly described -- sufficient to that a knowledgeable reader will be able to follow the logic and replicate the analysis.
+
+By the end of the first (Fall) semester, you need to develop a readable interim report. In the second (Spring) semester your task is to evolve this paper into a complete write-up of your work, as if intending to consider submitting to a scientific journal.
+
+However primitive the content may seem to be at the start, start writing.
+
+A fairly standard outline is as follows:
+
+- **Title**
+- **Abstract**
+- **Chapter 1. Introduction** (setting, problem description, citations, etc.)
+- **Chapter 2. Literature review**
+- **A Next Chapter:** Some papers have one or two chapters, some papers have several. Keep chapters relatively short: Each section should have one focus. For example,
+    + **Chapter 3. New Statistical Models** (theory, ideas)
+    + **Chapter 4. Some Computational Issues**
+    + **Chapter 5. Simulated Data** (evaluation of models)
+    + **Chapter 6. Application** (real motivating problem and data)
+    + ...
+- **Chapter X. Conclusion** (what was done, what was learned, what was good/bad, where research might or could go next) 
+- **Appendix** (maybe some extra math, details of code)
+- **Bibliography** (use bibtex, per the example bib files)
