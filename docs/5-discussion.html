@@ -1,0 +1,187 @@
+<!DOCTYPE html>
+<html >
+
+<head>
+
+  <meta charset="UTF-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <title>Chapter 5 Discussion | Beating Vegas: Creating a Dynamic Sports Betting Model</title>
+  <meta name="description" content="Chapter 5 Discussion | Beating Vegas: Creating a Dynamic Sports Betting Model">
+  <meta name="generator" content="bookdown  and GitBook 2.6.7">
+
+  <meta property="og:title" content="Chapter 5 Discussion | Beating Vegas: Creating a Dynamic Sports Betting Model" />
+  <meta property="og:type" content="book" />
+  
+  
+  
+  
+
+  <meta name="twitter:card" content="summary" />
+  <meta name="twitter:title" content="Chapter 5 Discussion | Beating Vegas: Creating a Dynamic Sports Betting Model" />
+  
+  
+  
+
+<meta name="author" content="Daniel A. Levine">
+
+
+<meta name="date" content="2019-04-19">
+
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta name="apple-mobile-web-app-capable" content="yes">
+  <meta name="apple-mobile-web-app-status-bar-style" content="black">
+  
+  
+<link rel="prev" href="4-betting-strategy.html">
+<link rel="next" href="6-appendix.html">
+<script src="libs/jquery-2.2.3/jquery.min.js"></script>
+<link href="libs/gitbook-2.6.7/css/style.css" rel="stylesheet" />
+<link href="libs/gitbook-2.6.7/css/plugin-table.css" rel="stylesheet" />
+<link href="libs/gitbook-2.6.7/css/plugin-bookdown.css" rel="stylesheet" />
+<link href="libs/gitbook-2.6.7/css/plugin-highlight.css" rel="stylesheet" />
+<link href="libs/gitbook-2.6.7/css/plugin-search.css" rel="stylesheet" />
+<link href="libs/gitbook-2.6.7/css/plugin-fontsettings.css" rel="stylesheet" />
+
+
+
+
+
+
+
+
+
+
+</head>
+
+<body>
+
+
+
+  <div class="book without-animation with-summary font-size-2 font-family-1" data-basepath=".">
+
+    <div class="book-summary">
+      <nav role="navigation">
+
+<ul class="summary">
+<li><a href="./"></a></li>
+<li class="divider"></li>
+<li class="chapter" data-level="1" data-path="1-introduction.html"><a href="1-introduction.html"><i class="fa fa-check"></i><b>1</b> Introduction</a></li>
+<li class="chapter" data-level="2" data-path="2-data.html"><a href="2-data.html"><i class="fa fa-check"></i><b>2</b> Data</a></li>
+<li class="chapter" data-level="3" data-path="3-modeling.html"><a href="3-modeling.html"><i class="fa fa-check"></i><b>3</b> Modeling</a><ul>
+<li class="chapter" data-level="3.1" data-path="3-modeling.html"><a href="3-modeling.html#point-spread-forecasting-model"><i class="fa fa-check"></i><b>3.1</b> Point Spread Forecasting Model</a><ul>
+<li class="chapter" data-level="3.1.1" data-path="3-modeling.html"><a href="3-modeling.html#exploratory-data-analysis"><i class="fa fa-check"></i><b>3.1.1</b> Exploratory Data Analysis</a></li>
+<li class="chapter" data-level="3.1.2" data-path="3-modeling.html"><a href="3-modeling.html#modeling-the-point-spread"><i class="fa fa-check"></i><b>3.1.2</b> Modeling the Point Spread</a></li>
+<li class="chapter" data-level="3.1.3" data-path="3-modeling.html"><a href="3-modeling.html#modeling-number-of-observations"><i class="fa fa-check"></i><b>3.1.3</b> Modeling Number of Observations</a></li>
+</ul></li>
+<li class="chapter" data-level="3.2" data-path="3-modeling.html"><a href="3-modeling.html#game-result-prediction"><i class="fa fa-check"></i><b>3.2</b> Game Result Prediction</a><ul>
+<li class="chapter" data-level="3.2.1" data-path="3-modeling.html"><a href="3-modeling.html#overview-of-decisions"><i class="fa fa-check"></i><b>3.2.1</b> Overview of Decisions</a></li>
+<li class="chapter" data-level="3.2.2" data-path="3-modeling.html"><a href="3-modeling.html#exploratory-data-analysis-1"><i class="fa fa-check"></i><b>3.2.2</b> Exploratory Data Analysis</a></li>
+<li class="chapter" data-level="3.2.3" data-path="3-modeling.html"><a href="3-modeling.html#model-selection"><i class="fa fa-check"></i><b>3.2.3</b> Model Selection</a></li>
+<li class="chapter" data-level="3.2.4" data-path="3-modeling.html"><a href="3-modeling.html#simulations"><i class="fa fa-check"></i><b>3.2.4</b> Simulations</a></li>
+<li class="chapter" data-level="3.2.5" data-path="3-modeling.html"><a href="3-modeling.html#model-selection-1"><i class="fa fa-check"></i><b>3.2.5</b> Model Selection</a></li>
+</ul></li>
+</ul></li>
+<li class="chapter" data-level="4" data-path="4-betting-strategy.html"><a href="4-betting-strategy.html"><i class="fa fa-check"></i><b>4</b> Betting Strategy</a><ul>
+<li class="chapter" data-level="4.1" data-path="4-betting-strategy.html"><a href="4-betting-strategy.html#results-using-k-fold-validation"><i class="fa fa-check"></i><b>4.1</b> Results Using K-Fold Validation</a></li>
+</ul></li>
+<li class="chapter" data-level="5" data-path="5-discussion.html"><a href="5-discussion.html"><i class="fa fa-check"></i><b>5</b> Discussion</a></li>
+<li class="chapter" data-level="6" data-path="6-appendix.html"><a href="6-appendix.html"><i class="fa fa-check"></i><b>6</b> Appendix</a><ul>
+<li class="chapter" data-level="6.1" data-path="6-appendix.html"><a href="6-appendix.html#example-row-of-dataframe-used-for-modeling-the-game-score"><i class="fa fa-check"></i><b>6.1</b> Example Row of Dataframe used for Modeling the Game Score</a></li>
+<li class="chapter" data-level="6.2" data-path="6-appendix.html"><a href="6-appendix.html#modeling-number-of-observations-1"><i class="fa fa-check"></i><b>6.2</b> Modeling Number of Observations</a></li>
+<li class="chapter" data-level="6.3" data-path="6-appendix.html"><a href="6-appendix.html#example-row-of-test-data-set-with-probabilities"><i class="fa fa-check"></i><b>6.3</b> Example Row of Test Data set with Probabilities</a></li>
+<li class="chapter" data-level="6.4" data-path="6-appendix.html"><a href="6-appendix.html#diagnostics-for-random-effects-in-mixed-linear-models-for-the-score-difference"><i class="fa fa-check"></i><b>6.4</b> Diagnostics for Random Effects in Mixed-Linear Models for the Score Difference</a></li>
+</ul></li>
+<li class="chapter" data-level="7" data-path="7-references.html"><a href="7-references.html"><i class="fa fa-check"></i><b>7</b> References</a></li>
+<li class="divider"></li>
+<li><a href="https://github.com/rstudio/bookdown" target="blank">Published with bookdown</a></li>
+</ul>
+
+      </nav>
+    </div>
+
+    <div class="book-body">
+      <div class="body-inner">
+        <div class="book-header" role="navigation">
+          <h1>
+            <i class="fa fa-circle-o-notch fa-spin"></i><a href="./">Beating Vegas: Creating a Dynamic Sports Betting Model</a>
+          </h1>
+        </div>
+
+        <div class="page-wrapper" tabindex="-1" role="main">
+          <div class="page-inner">
+
+            <section class="normal" id="section-">
+<div id="discussion" class="section level1">
+<h1><span class="header-section-number">Chapter 5</span> Discussion</h1>
+<p>The goal of this thesis is to create a betting model that provides a statistical basis for choosing the timing, team and amount to bet on a certain game. Through combining a dynamic linear model for the point spread throughout the week with a mixed-linear model for predicting the score difference in the game, I found different betting strategies that generated astronomical average returns.</p>
+<p>So, if I was able to create a model with such high average returns, why are there not large funds that specialize in sports gambling? Casinos are not forced to accept a bet, so if a customer keeps coming with massive bets and continues to win, the casino will not accept the bets of these customers. There are difficult and complex ways to circumvent some of the casino staff and place bets, but that is another factor that makes sports gambling quite difficult. For betting small amounts of money, however, the casino is less likely to notice the bets and utilizing this model can be a fun way to increase this cash. However, each of these betting methods – even the safest of them – are extremely risky, with a much larger chance of losing over 50% of your bankroll than just about any other type of typical investment. Human emotion plays a role, as well, as many people will quit when they are down, even though continuing to bet may be the statistically savvy decision. As sports gambling becomes more legalized, more recreational bettors will place bets, and these bets typically lose. Thus, casinos are more likely to accept bets from the “sharper” bettors. One leading prop trading firms, Susquehanna International Group (SIG), already has a “quantitative sports trader” role, and it is likely more firms will follow suit as sports gambling becomes legal in their states (SIG is based in Pennsylvania where sports gambling is legal) and sports gambling becomes destigmatized.</p>
+<p>For my future work with this model, after optimizing my arbitrarily chosen parameters, such as the decision point at two-thirds of the way through the week, the 80% confidence interval, my future betting amounts and more, I would like to expand this model to hedge against risk. I want to make this model more applicable to a real person willing to invest their money, and even with advertising the massive average returns, few people would invest money in models that are so risky. Furthermore, this model only provides the basis on when to bet. In order to make this model usable, I need to create a computer program that tracks the current spreads (across multiple markets) and places bets at the first decision point, and then if the spread for any game reaches its key number. Finding ways to hedge risk and creating a computer program to carry out bets are both necessary to implement this model.</p>
+<p></p>
+</div>
+            </section>
+
+          </div>
+        </div>
+      </div>
+<a href="4-betting-strategy.html" class="navigation navigation-prev " aria-label="Previous page"><i class="fa fa-angle-left"></i></a>
+<a href="6-appendix.html" class="navigation navigation-next " aria-label="Next page"><i class="fa fa-angle-right"></i></a>
+    </div>
+  </div>
+<script src="libs/gitbook-2.6.7/js/app.min.js"></script>
+<script src="libs/gitbook-2.6.7/js/lunr.js"></script>
+<script src="libs/gitbook-2.6.7/js/plugin-search.js"></script>
+<script src="libs/gitbook-2.6.7/js/plugin-sharing.js"></script>
+<script src="libs/gitbook-2.6.7/js/plugin-fontsettings.js"></script>
+<script src="libs/gitbook-2.6.7/js/plugin-bookdown.js"></script>
+<script src="libs/gitbook-2.6.7/js/jquery.highlight.js"></script>
+<script>
+gitbook.require(["gitbook"], function(gitbook) {
+gitbook.start({
+"sharing": {
+"github": false,
+"facebook": true,
+"twitter": true,
+"google": false,
+"linkedin": false,
+"weibo": false,
+"instapaper": false,
+"vk": false,
+"all": ["facebook", "google", "twitter", "linkedin", "weibo", "instapaper"]
+},
+"fontsettings": {
+"theme": "white",
+"family": "sans",
+"size": 2
+},
+"edit": {
+"link": null,
+"text": null
+},
+"history": {
+"link": null,
+"text": null
+},
+"download": [["thesis.pdf", "PDF"], ["thesis.epub", "EPUB"], ["thesis.docx", "Word"]],
+"toc": {
+"collapse": "section"
+}
+});
+});
+</script>
+
+<!-- dynamically load mathjax for compatibility with self-contained -->
+<script>
+  (function () {
+    var script = document.createElement("script");
+    script.type = "text/javascript";
+    var src = "";
+    if (src === "" || src === "true") src = "https://mathjax.rstudio.com/latest/MathJax.js?config=TeX-MML-AM_CHTML";
+    if (location.protocol !== "file:" && /^https?:/.test(src))
+      src = src.replace(/^https?:/, '');
+    script.src = src;
+    document.getElementsByTagName("head")[0].appendChild(script);
+  })();
+</script>
+</body>
+
+</html>

@@ -1,0 +1,264 @@
+<!DOCTYPE html>
+<html >
+
+<head>
+
+  <meta charset="UTF-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <title>Chapter 6 Appendix | Beating Vegas: Creating a Dynamic Sports Betting Model</title>
+  <meta name="description" content="Chapter 6 Appendix | Beating Vegas: Creating a Dynamic Sports Betting Model">
+  <meta name="generator" content="bookdown  and GitBook 2.6.7">
+
+  <meta property="og:title" content="Chapter 6 Appendix | Beating Vegas: Creating a Dynamic Sports Betting Model" />
+  <meta property="og:type" content="book" />
+  
+  
+  
+  
+
+  <meta name="twitter:card" content="summary" />
+  <meta name="twitter:title" content="Chapter 6 Appendix | Beating Vegas: Creating a Dynamic Sports Betting Model" />
+  
+  
+  
+
+<meta name="author" content="Daniel A. Levine">
+
+
+<meta name="date" content="2019-04-19">
+
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta name="apple-mobile-web-app-capable" content="yes">
+  <meta name="apple-mobile-web-app-status-bar-style" content="black">
+  
+  
+<link rel="prev" href="5-discussion.html">
+<link rel="next" href="7-references.html">
+<script src="libs/jquery-2.2.3/jquery.min.js"></script>
+<link href="libs/gitbook-2.6.7/css/style.css" rel="stylesheet" />
+<link href="libs/gitbook-2.6.7/css/plugin-table.css" rel="stylesheet" />
+<link href="libs/gitbook-2.6.7/css/plugin-bookdown.css" rel="stylesheet" />
+<link href="libs/gitbook-2.6.7/css/plugin-highlight.css" rel="stylesheet" />
+<link href="libs/gitbook-2.6.7/css/plugin-search.css" rel="stylesheet" />
+<link href="libs/gitbook-2.6.7/css/plugin-fontsettings.css" rel="stylesheet" />
+
+
+
+
+
+
+
+
+
+
+</head>
+
+<body>
+
+
+
+  <div class="book without-animation with-summary font-size-2 font-family-1" data-basepath=".">
+
+    <div class="book-summary">
+      <nav role="navigation">
+
+<ul class="summary">
+<li><a href="./"></a></li>
+<li class="divider"></li>
+<li class="chapter" data-level="1" data-path="1-introduction.html"><a href="1-introduction.html"><i class="fa fa-check"></i><b>1</b> Introduction</a></li>
+<li class="chapter" data-level="2" data-path="2-data.html"><a href="2-data.html"><i class="fa fa-check"></i><b>2</b> Data</a></li>
+<li class="chapter" data-level="3" data-path="3-modeling.html"><a href="3-modeling.html"><i class="fa fa-check"></i><b>3</b> Modeling</a><ul>
+<li class="chapter" data-level="3.1" data-path="3-modeling.html"><a href="3-modeling.html#point-spread-forecasting-model"><i class="fa fa-check"></i><b>3.1</b> Point Spread Forecasting Model</a><ul>
+<li class="chapter" data-level="3.1.1" data-path="3-modeling.html"><a href="3-modeling.html#exploratory-data-analysis"><i class="fa fa-check"></i><b>3.1.1</b> Exploratory Data Analysis</a></li>
+<li class="chapter" data-level="3.1.2" data-path="3-modeling.html"><a href="3-modeling.html#modeling-the-point-spread"><i class="fa fa-check"></i><b>3.1.2</b> Modeling the Point Spread</a></li>
+<li class="chapter" data-level="3.1.3" data-path="3-modeling.html"><a href="3-modeling.html#modeling-number-of-observations"><i class="fa fa-check"></i><b>3.1.3</b> Modeling Number of Observations</a></li>
+</ul></li>
+<li class="chapter" data-level="3.2" data-path="3-modeling.html"><a href="3-modeling.html#game-result-prediction"><i class="fa fa-check"></i><b>3.2</b> Game Result Prediction</a><ul>
+<li class="chapter" data-level="3.2.1" data-path="3-modeling.html"><a href="3-modeling.html#overview-of-decisions"><i class="fa fa-check"></i><b>3.2.1</b> Overview of Decisions</a></li>
+<li class="chapter" data-level="3.2.2" data-path="3-modeling.html"><a href="3-modeling.html#exploratory-data-analysis-1"><i class="fa fa-check"></i><b>3.2.2</b> Exploratory Data Analysis</a></li>
+<li class="chapter" data-level="3.2.3" data-path="3-modeling.html"><a href="3-modeling.html#model-selection"><i class="fa fa-check"></i><b>3.2.3</b> Model Selection</a></li>
+<li class="chapter" data-level="3.2.4" data-path="3-modeling.html"><a href="3-modeling.html#simulations"><i class="fa fa-check"></i><b>3.2.4</b> Simulations</a></li>
+<li class="chapter" data-level="3.2.5" data-path="3-modeling.html"><a href="3-modeling.html#model-selection-1"><i class="fa fa-check"></i><b>3.2.5</b> Model Selection</a></li>
+</ul></li>
+</ul></li>
+<li class="chapter" data-level="4" data-path="4-betting-strategy.html"><a href="4-betting-strategy.html"><i class="fa fa-check"></i><b>4</b> Betting Strategy</a><ul>
+<li class="chapter" data-level="4.1" data-path="4-betting-strategy.html"><a href="4-betting-strategy.html#results-using-k-fold-validation"><i class="fa fa-check"></i><b>4.1</b> Results Using K-Fold Validation</a></li>
+</ul></li>
+<li class="chapter" data-level="5" data-path="5-discussion.html"><a href="5-discussion.html"><i class="fa fa-check"></i><b>5</b> Discussion</a></li>
+<li class="chapter" data-level="6" data-path="6-appendix.html"><a href="6-appendix.html"><i class="fa fa-check"></i><b>6</b> Appendix</a><ul>
+<li class="chapter" data-level="6.1" data-path="6-appendix.html"><a href="6-appendix.html#example-row-of-dataframe-used-for-modeling-the-game-score"><i class="fa fa-check"></i><b>6.1</b> Example Row of Dataframe used for Modeling the Game Score</a></li>
+<li class="chapter" data-level="6.2" data-path="6-appendix.html"><a href="6-appendix.html#modeling-number-of-observations-1"><i class="fa fa-check"></i><b>6.2</b> Modeling Number of Observations</a></li>
+<li class="chapter" data-level="6.3" data-path="6-appendix.html"><a href="6-appendix.html#example-row-of-test-data-set-with-probabilities"><i class="fa fa-check"></i><b>6.3</b> Example Row of Test Data set with Probabilities</a></li>
+<li class="chapter" data-level="6.4" data-path="6-appendix.html"><a href="6-appendix.html#diagnostics-for-random-effects-in-mixed-linear-models-for-the-score-difference"><i class="fa fa-check"></i><b>6.4</b> Diagnostics for Random Effects in Mixed-Linear Models for the Score Difference</a></li>
+</ul></li>
+<li class="chapter" data-level="7" data-path="7-references.html"><a href="7-references.html"><i class="fa fa-check"></i><b>7</b> References</a></li>
+<li class="divider"></li>
+<li><a href="https://github.com/rstudio/bookdown" target="blank">Published with bookdown</a></li>
+</ul>
+
+      </nav>
+    </div>
+
+    <div class="book-body">
+      <div class="body-inner">
+        <div class="book-header" role="navigation">
+          <h1>
+            <i class="fa fa-circle-o-notch fa-spin"></i><a href="./">Beating Vegas: Creating a Dynamic Sports Betting Model</a>
+          </h1>
+        </div>
+
+        <div class="page-wrapper" tabindex="-1" role="main">
+          <div class="page-inner">
+
+            <section class="normal" id="section-">
+<div id="appendix" class="section level1">
+<h1><span class="header-section-number">Chapter 6</span> Appendix</h1>
+<div id="example-row-of-dataframe-used-for-modeling-the-game-score" class="section level2">
+<h2><span class="header-section-number">6.1</span> Example Row of Dataframe used for Modeling the Game Score</h2>
+<p>Table  shows one row of the dataset used for modeling. For size purposes, I included just general columns for the key variables used in modeling, but there are individual columns for both the home and away teams that show the statistics of each team. The DVOAs listed are percentages. My mixed-linear models utilized only the listed variables, and transformations of the listed variables.</p>
+
+</div>
+<div id="modeling-number-of-observations-1" class="section level2">
+<h2><span class="header-section-number">6.2</span> Modeling Number of Observations</h2>
+<table>
+<caption>
+<span id="tab:unnamed-chunk-38">Table 6.1: </span>Row of Dataframe used for Observation Point Model
+</caption>
+<thead>
+<tr>
+<th style="text-align:right;">
+Final Number of Obsv.
+</th>
+<th style="text-align:right;">
+Obsv. at Time
+</th>
+<th style="text-align:right;">
+Total Ticket Number
+</th>
+<th style="text-align:right;">
+Total Cash
+</th>
+<th style="text-align:right;">
+Week
+</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td style="text-align:right;">
+188
+</td>
+<td style="text-align:right;">
+132
+</td>
+<td style="text-align:right;">
+1467
+</td>
+<td style="text-align:right;">
+210373
+</td>
+<td style="text-align:right;">
+10
+</td>
+</tr>
+</tbody>
+</table>
+
+<div class="figure" style="text-align: center"><span id="fig:unnamed-chunk-39"></span>
+<img src="thesis_files/figure-html/unnamed-chunk-39-1.png" alt="\label{fig:residobsv}Diagnostic Plots for Obsveration Number Model" width=".24\linewidth" /><img src="thesis_files/figure-html/unnamed-chunk-39-2.png" alt="\label{fig:residobsv}Diagnostic Plots for Obsveration Number Model" width=".24\linewidth" /><img src="thesis_files/figure-html/unnamed-chunk-39-3.png" alt="\label{fig:residobsv}Diagnostic Plots for Obsveration Number Model" width=".24\linewidth" /><img src="thesis_files/figure-html/unnamed-chunk-39-4.png" alt="\label{fig:residobsv}Diagnostic Plots for Obsveration Number Model" width=".24\linewidth" />
+<p class="caption">
+Figure 6.1: Diagnostic Plots for Obsveration Number Model
+</p>
+</div>
+<p>Table  is an example row of the dataframe used to model the number of observations that will be in a series based on the amount of cash, tickets and observations up to a time <span class="math inline">\(t\)</span>.</p>
+<p>Table  displays the parameters for this model, while Figure  shows the diagnostic plots for this model. The residual plots show that a mixed linear model is a good approach. The residuals, while not perfect, seem to follow the normal distribution and the residuals are relatively evenly distributed for each week – the random effect.</p>
+</div>
+<div id="example-row-of-test-data-set-with-probabilities" class="section level2">
+<h2><span class="header-section-number">6.3</span> Example Row of Test Data set with Probabilities</h2>
+<p>The test data set includes all the same columns shown in , in addition to the following key columns (and more for each of the different betting strategies). Using the K1 betting strategy for the game between the Indianapolis Colts and Jacksonville Jaguars on November 11, 2018, the spread at the first decision point was the away team, the Jaguars (+3). At this decision point spread, I expect the away team to beat the spread with a proportion of <span class="math inline">\(1 - 0.444 = 0.556\)</span>. If the Bet Team variable is equal to 1, it means the bet will be on the away team. With an expected value of betting on the Jaguars (+3) of 0.0676, the K1 betting strategy calls for me to bet on the Jaguars. My allotment for this bet is 6.76% of my current bankroll. If the future forecasted spread were to make the game more advantageous to bet on, in terms of expected value, then I would only be one-third of my allotment now. However, the forecasted future spread has the Jaguars (+2.5), which would be a much worse bet. The expected value of the Jaguars (+2.5) is not only lower than our expected value at the first decision point, but it is negative. Because the expected value would lower by betting on the game at the number my DLM forecasts for the spread, I bet my full allotment at Jaguars (+3), and there will be no future bet, regardless of where the spread actually does move. The Future Bet Team column refers to the fact that because the simulated probability is below 0.5, I would bet on the away team (the Jaguars), if I were to make a future bet.</p>
+</div>
+<div id="diagnostics-for-random-effects-in-mixed-linear-models-for-the-score-difference" class="section level2">
+<h2><span class="header-section-number">6.4</span> Diagnostics for Random Effects in Mixed-Linear Models for the Score Difference</h2>
+<p>Figures  and  show the diagnostic plots for the random effects of the two mixed linear models. The residuals seem relatively consistent throughout the groups, and the mixed linear models seem to fit both models appropriately.</p>
+<div class="figure" style="text-align: center"><span id="fig:unnamed-chunk-40"></span>
+<img src="thesis_files/figure-html/unnamed-chunk-40-1.png" alt="\label{fig:appenlmer1}Team-Specific Model Diagnostics by Away Team Group" width=".49\linewidth" /><img src="thesis_files/figure-html/unnamed-chunk-40-2.png" alt="\label{fig:appenlmer1}Team-Specific Model Diagnostics by Away Team Group" width=".49\linewidth" />
+<p class="caption">
+Figure 6.2: Team-Specific Model Diagnostics by Away Team Group
+</p>
+</div>
+<div class="figure" style="text-align: center"><span id="fig:unnamed-chunk-41"></span>
+<img src="thesis_files/figure-html/unnamed-chunk-41-1.png" alt="\label{fig:appenlmer2}Betting-Trend Model Diagnostics by Away Team and Year Group" width=".32\linewidth" /><img src="thesis_files/figure-html/unnamed-chunk-41-2.png" alt="\label{fig:appenlmer2}Betting-Trend Model Diagnostics by Away Team and Year Group" width=".32\linewidth" /><img src="thesis_files/figure-html/unnamed-chunk-41-3.png" alt="\label{fig:appenlmer2}Betting-Trend Model Diagnostics by Away Team and Year Group" width=".32\linewidth" />
+<p class="caption">
+Figure 6.3: Betting-Trend Model Diagnostics by Away Team and Year Group
+</p>
+</div>
+<p></p>
+</div>
+</div>
+            </section>
+
+          </div>
+        </div>
+      </div>
+<a href="5-discussion.html" class="navigation navigation-prev " aria-label="Previous page"><i class="fa fa-angle-left"></i></a>
+<a href="7-references.html" class="navigation navigation-next " aria-label="Next page"><i class="fa fa-angle-right"></i></a>
+    </div>
+  </div>
+<script src="libs/gitbook-2.6.7/js/app.min.js"></script>
+<script src="libs/gitbook-2.6.7/js/lunr.js"></script>
+<script src="libs/gitbook-2.6.7/js/plugin-search.js"></script>
+<script src="libs/gitbook-2.6.7/js/plugin-sharing.js"></script>
+<script src="libs/gitbook-2.6.7/js/plugin-fontsettings.js"></script>
+<script src="libs/gitbook-2.6.7/js/plugin-bookdown.js"></script>
+<script src="libs/gitbook-2.6.7/js/jquery.highlight.js"></script>
+<script>
+gitbook.require(["gitbook"], function(gitbook) {
+gitbook.start({
+"sharing": {
+"github": false,
+"facebook": true,
+"twitter": true,
+"google": false,
+"linkedin": false,
+"weibo": false,
+"instapaper": false,
+"vk": false,
+"all": ["facebook", "google", "twitter", "linkedin", "weibo", "instapaper"]
+},
+"fontsettings": {
+"theme": "white",
+"family": "sans",
+"size": 2
+},
+"edit": {
+"link": null,
+"text": null
+},
+"history": {
+"link": null,
+"text": null
+},
+"download": [["thesis.pdf", "PDF"], ["thesis.epub", "EPUB"], ["thesis.docx", "Word"]],
+"toc": {
+"collapse": "section"
+}
+});
+});
+</script>
+
+<!-- dynamically load mathjax for compatibility with self-contained -->
+<script>
+  (function () {
+    var script = document.createElement("script");
+    script.type = "text/javascript";
+    var src = "";
+    if (src === "" || src === "true") src = "https://mathjax.rstudio.com/latest/MathJax.js?config=TeX-MML-AM_CHTML";
+    if (location.protocol !== "file:" && /^https?:/.test(src))
+      src = src.replace(/^https?:/, '');
+    script.src = src;
+    document.getElementsByTagName("head")[0].appendChild(script);
+  })();
+</script>
+</body>
+
+</html>

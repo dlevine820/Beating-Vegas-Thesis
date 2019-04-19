@@ -1,0 +1,76 @@
+#Introduction
+
+Leading up to each NFL game, "bookmakers", or casino staff, place a "spread" on which casino patrons can bet.  The bookmakers create a spread for the game because most NFL games feature unbalanced teams, and the result of the game is not in much question; however, the amount by which the superior team will win creates a more fair proposition.  The spread is the amount by which the bookmakers think the superior team will win.  For example, the spread for the Super Bowl was the New England Patriots (-2.0) versus the Los Angeles Rams.  This means the bookmakers expected the Patriots to win by 2 points.  For the Patriots to beat the spread, they needed to win the game by greater than 2 points -- which they did, as they won the game 13 - 3.  
+
+For the casino, the goal of creating this supposed fair value proposition is to give its patrons the opportunity to bet on the result of an NFL game with what should be a 50/50 proposition.  However, the casino uses unfair odds to create an edge for itself.  For a bet against the spread, a bettor must place 11 units in order to win 10 units.  
+
+This means that if there is an equal amount of money on both teams, the casino wins money.  For example, if both teams have 11 units placed on them to beat the spread, the casino is guaranteed to make money.  This is because one team will beat the spread and win 10 units for its bettor, while the other team will fail to cover the spread and instead lose 11 units for its bettor.  Thus, for 22 units bet on the game, the casino is guaranteed to win 1 unit.  So, their return is a guaranteed $\frac{1}{22} = 4.5\%$.
+
+In most cases, the casino looks to place the spread at a point that will generate equal amount of money on both sides -- not the true number of points by which they think a team will win.  As a result, there is value in this market in finding the instances where the true result differs greatly from the spread.  These points of value often come from betting against popular or trendy picks, as the market (or the bettors) tend to overreact to recent performance, as well as big-name players.  If there are unequal amounts of money on each side leading up to the game, the casino will adjust the spread throughout the week.  This means there are certain points in the week where it is more advantageous to bet on a certain team.  
+
+In addition, there are also times when the casino fails to move the spread even with unequal amounts of money on both sides.  This means that the casino is essentially placing a bet that the side the public bets more on will lose.  The cliche states, “the casino always wins”.  It is important to identify the times when a casino is placing a bet in order to bet on the same side as the casino.  
+
+The goal of this project is to create a betting model that provides a statistical basis for choosing the timing, team and amount to bet on a certain game.  To do this, I first create a model to forecast the spread throughout the week, as to determine when exactly in the week is the most advantageous point to bet.  Treating the spread as a time series object is a good method to achieve this goal.  Second, I create a model that can predict the difference in score between the two teams playing and provide a probability point estimate for each team "beating the spread".  Using this probability and the fact that a bettor must bet 11 units to win 10 units, I generate an expected value for betting on each team.  In order to have a positive expected value to bet on a game, the probability point estimate must be greater than 52.8\%.  In addition, the forecasted spreads helps determine whether it would be more advantageous to wait to bet on the game.    Finally, after generating expected value for all the games, I simulate how my models perform using a variety of different betting strategies.  I examine the distribution of winnings for each betting strategy after running the simulations numerous times.  Each betting strategy has different rules and parameters that determine the stake and timing of each bet.  One key note is that there will not be a bet placed on every game, as if the model predicts a 50\% probability of a team beating the spread, the expected value for betting on this game for either team is negative.  Thus, it is not always advantageous to bet on the games.  
+
+The remainder of this thesis is organized as followed: in Section 2, I discuss how I gathered my data and the techniques I used for organizing these data into a usable format.  In Section 3, I discuss my two different modeling techniques -- starting first with the model to forecast the spread throughout the week before moving into the to predict the score of the game.  Section 4 discusses my nine different betting strategies and evaluates the distribution of outcomes resulting from these betting strategies.  Finally, Section 5 wraps up this thesis with a discussion of the process, feasibility and next steps for this project.  
+
+#Data
+
+There were multiple data sources needed for this project.  First, to create the dynamic linear model to forecast the spread, I gathered data on all the spread movements throughout the week leading up to the game for as many NFL games as possible.  Through web scraping from the https://pregame.com/game-center website, I was able to gather these data on all NFL games from the past two seasons.  These data needed a significant amount of manipulating and cleaning to be put in a usable format.  Through using "stingr" manipulations, each game contained a data frame of approximately 100-200 observations of the variables listed in Table \ref{tab:bet_stats}.
+
+
+\begin{table}[]
+\caption {Description of Statistics on Betting Data from Web Scraping https://pregame.com/game-center}
+\begin{tabular}{|l|l|}
+\hline
+\textbf{Statistic}     & \textbf{Description}                                                           \\ \hline
+Time and Date          & The time and date of the observation; \\ & The first observation nearly always occurred after both teams had finished \\ & \quad playing their previous game, so usually the first observation was Sunday \\ & \quad evening one week prior to the game with the final observation \\ & \quad seconds before game time (usually the following Sunday)                                       \\ \hline
+Spread                 & The spread for the away team                                                  \\ \hline
+Away Cash   & This is the percent of the money bet on the game 
+                    \\ Percentage & that is bet on the away team \\ \hline
+Away Cash          & This is the amount of money that is bet on the away team \\ Bet &                      \\ \hline
+Away Ticket & The percent of bets on this game that are on the away team \\ Percentage &                     \\ \hline
+Away Ticket     & The number of bets on this game that are on the away team \\ Number &                     \\ \hline
+\end{tabular}
+\label{tab:bet_stats}
+\end{table}
+
+With these data, it is easy to calculate the same dataset for the home team through the simple formulas listed Equations \eqref{eq:home1} --- \eqref{eq:home4}
+
+\begin{eqnarray}
+  \text{Home Cash Bet} =& \frac{\text{Away Cash Bet}}{\text{Away Cash Percentage}} - \text{Away Cash Bet} \label{eq:home1} \\
+\text{Home Cash Percentage} =&  \frac{\text{Home Cash Bet}}{\text{Home Cash Bet} + \text{Away Cash Bet}} \label{eq:home2} \\
+  \text{Home Ticket Number} =& \frac{\text{Away Ticket Number}}{\text{Away Ticket Percentage}} - \text{Away Ticket Number} \label{eq:home3} \\
+  \text{Home Ticket Percentage} =&  \frac{\text{Home Ticket Number}}{\text{Home Ticket Number} + \text{Away Ticket Number}} \label{eq:home4}
+  \end{eqnarray}
+
+
+ These variables are important because they influence the spread.  This is because a casino wants to manipulate the spread so the percent of money on each team is 50\%, as this will generate 4.5\% of money for the casino, guaranteed.  However, other times, the casino is essentially gambling by allowing for uneven money percentages.  They take a position in a certain outcome that, according to their models, can raise their expected value.
+
+The timing for each of the data points from these series are irregular.  To start, each week, one game is played on Thursday night, one on Monday night, with the rest of the games played on Sunday.   The series starts when the casinos first open the game for betting.  This is usually occurs the Sunday one week prior to the start of the game.  But, since not all games are played on Sunday, some games are open for betting for shorter or longer periods of time.  In addition, the casinos open up the Week 1 games for betting weeks in advance.  This is the first irregularity that causes for different length series’.  This is why the shortest series has only 57 data points while the longest series has 265 data points.  However, the 25\% - 75\% of data points is 130 to 170, and nearly all series fall between 100 - 200 data points.   
+
+Within each series, the data is not captured in standardized time intervals, but instead, each data point is captured when there is a shift in the percentage of money or the percentage of tickets that is bet on each team.  Some data points can be spaced minutes apart while others can be spaced out 12 hours apart.  It is the timing of bets that trigger a data point.  For modeling purposes, I treat these irregular intervals as evenly timed data points.  When I forecast the spread, I forecast for $h$ number of future points with $h$ chosen through a separate model used to predict how many more data points this series based on the week in the NFL season, the hours until the game starts, the number of bets and amount of cash bet based on the game.  This is further discussed in the modeling section.
+
+The next dataset is a CSV that is updated weekly that contains information, such as the teams, week, year and location, about all NFL games dating back to 2006, in addition to the opening and closing spreads for these games.  This aspect is useful for cross-referencing.  But, more importantly, this dataset contains the results of all the games, in addition to a list of all games. This list can be iterated through for all 414 separate DLMs.
+
+Finally, in order to find team-level statistics, I needed to find separate data sets for each NFL season.  This is because leading up to a Week 5, 2018 matchup, the only information that bettors have is all the season (and all previous seasons) data leading up to Week 5 in 2018.  Football Outsiders has webpages with week by week statistics for a certain type of statistic.  This is called Defense-adjusted Value Over Average (DVOA).  DVOA measures a team's efficiency by comparing success on every single play to a league average based on situation and opponent.  In addition, the “Weighted DVOA” is another metric provided, and this statistic weights the team’s DVOA with a preseason projection that the website, Football Outsider, created.  This is because after 1 week, a team’s DVOA will be very extreme, but weighting it with a projection ensures that the metric will not overreact to an extremely limited sample size.  This is essentially similar to putting a prior on DVOA and updating the posterior with the data from the games played.  The scale for these statistics is a percentage, and this indicates the percent above or below average that a team is.  Table \ref{tab:fo_stats} describes all these statistics.   
+  
+
+\begin{table}[] \centering
+\caption {Description of Team-Specific Statistics from Football Outsiders}
+\begin{tabular}{|l|l|}
+\hline
+\textbf{Statistic} & \textbf{Explanation}                                                                                                       \\ \hline
+Total DVOA         & Measures a team's efficiency by comparing success on 
+                \\ & \quad every single play to a league average based on situation and opponent \\ \hline
+Weighted DVOA      & Weights the DVOA with a preseason projection                                                                               \\ \hline
+Offense DVOA       & Measures a team's offensive efficiency                                                                                     \\ \hline
+Defense DVOA       & Measures a team's defensive efficiency                                                                                     \\ \hline
+Special Teams & Measures a team's efficiency on Special Teams plays 
+                \\ DVOA & \quad (field goals, punts, kickoffs)                                         \\ \hline
+Record             & A teams record of their wins, losses and ties                                                                              \\ \hline
+\end{tabular}
+\label{tab:fo_stats}
+\end{table}
+
+I needed to merge and match these data sets.  I did so by matching the week and year of each game to the correct dataset for the statistics, and then matching the team to their statistics up to that certain week.  This completed data set is used for modeling.  Section \ref{sec:appen1} of the Appendix shows one line of this data set.  

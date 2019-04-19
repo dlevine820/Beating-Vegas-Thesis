@@ -1,0 +1,195 @@
+<!DOCTYPE html>
+<html >
+
+<head>
+
+  <meta charset="UTF-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <title>Beating Vegas: Creating a Dynamic Sports Betting Model</title>
+  <meta name="description" content="Beating Vegas: Creating a Dynamic Sports Betting Model">
+  <meta name="generator" content="bookdown  and GitBook 2.6.7">
+
+  <meta property="og:title" content="Beating Vegas: Creating a Dynamic Sports Betting Model" />
+  <meta property="og:type" content="book" />
+  
+  
+  
+  
+
+  <meta name="twitter:card" content="summary" />
+  <meta name="twitter:title" content="Beating Vegas: Creating a Dynamic Sports Betting Model" />
+  
+  
+  
+
+<meta name="author" content="Daniel A. Levine">
+
+
+<meta name="date" content="2019-04-19">
+
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta name="apple-mobile-web-app-capable" content="yes">
+  <meta name="apple-mobile-web-app-status-bar-style" content="black">
+  
+  
+
+<link rel="next" href="2-data.html">
+<script src="libs/jquery-2.2.3/jquery.min.js"></script>
+<link href="libs/gitbook-2.6.7/css/style.css" rel="stylesheet" />
+<link href="libs/gitbook-2.6.7/css/plugin-table.css" rel="stylesheet" />
+<link href="libs/gitbook-2.6.7/css/plugin-bookdown.css" rel="stylesheet" />
+<link href="libs/gitbook-2.6.7/css/plugin-highlight.css" rel="stylesheet" />
+<link href="libs/gitbook-2.6.7/css/plugin-search.css" rel="stylesheet" />
+<link href="libs/gitbook-2.6.7/css/plugin-fontsettings.css" rel="stylesheet" />
+
+
+
+
+
+
+
+
+
+
+</head>
+
+<body>
+
+
+
+  <div class="book without-animation with-summary font-size-2 font-family-1" data-basepath=".">
+
+    <div class="book-summary">
+      <nav role="navigation">
+
+<ul class="summary">
+<li><a href="./"></a></li>
+<li class="divider"></li>
+<li class="chapter" data-level="1" data-path="1-introduction.html"><a href="1-introduction.html"><i class="fa fa-check"></i><b>1</b> Introduction</a></li>
+<li class="chapter" data-level="2" data-path="2-data.html"><a href="2-data.html"><i class="fa fa-check"></i><b>2</b> Data</a></li>
+<li class="chapter" data-level="3" data-path="3-modeling.html"><a href="3-modeling.html"><i class="fa fa-check"></i><b>3</b> Modeling</a><ul>
+<li class="chapter" data-level="3.1" data-path="3-modeling.html"><a href="3-modeling.html#point-spread-forecasting-model"><i class="fa fa-check"></i><b>3.1</b> Point Spread Forecasting Model</a><ul>
+<li class="chapter" data-level="3.1.1" data-path="3-modeling.html"><a href="3-modeling.html#exploratory-data-analysis"><i class="fa fa-check"></i><b>3.1.1</b> Exploratory Data Analysis</a></li>
+<li class="chapter" data-level="3.1.2" data-path="3-modeling.html"><a href="3-modeling.html#modeling-the-point-spread"><i class="fa fa-check"></i><b>3.1.2</b> Modeling the Point Spread</a></li>
+<li class="chapter" data-level="3.1.3" data-path="3-modeling.html"><a href="3-modeling.html#modeling-number-of-observations"><i class="fa fa-check"></i><b>3.1.3</b> Modeling Number of Observations</a></li>
+</ul></li>
+<li class="chapter" data-level="3.2" data-path="3-modeling.html"><a href="3-modeling.html#game-result-prediction"><i class="fa fa-check"></i><b>3.2</b> Game Result Prediction</a><ul>
+<li class="chapter" data-level="3.2.1" data-path="3-modeling.html"><a href="3-modeling.html#overview-of-decisions"><i class="fa fa-check"></i><b>3.2.1</b> Overview of Decisions</a></li>
+<li class="chapter" data-level="3.2.2" data-path="3-modeling.html"><a href="3-modeling.html#exploratory-data-analysis-1"><i class="fa fa-check"></i><b>3.2.2</b> Exploratory Data Analysis</a></li>
+<li class="chapter" data-level="3.2.3" data-path="3-modeling.html"><a href="3-modeling.html#model-selection"><i class="fa fa-check"></i><b>3.2.3</b> Model Selection</a></li>
+<li class="chapter" data-level="3.2.4" data-path="3-modeling.html"><a href="3-modeling.html#simulations"><i class="fa fa-check"></i><b>3.2.4</b> Simulations</a></li>
+<li class="chapter" data-level="3.2.5" data-path="3-modeling.html"><a href="3-modeling.html#model-selection-1"><i class="fa fa-check"></i><b>3.2.5</b> Model Selection</a></li>
+</ul></li>
+</ul></li>
+<li class="chapter" data-level="4" data-path="4-betting-strategy.html"><a href="4-betting-strategy.html"><i class="fa fa-check"></i><b>4</b> Betting Strategy</a><ul>
+<li class="chapter" data-level="4.1" data-path="4-betting-strategy.html"><a href="4-betting-strategy.html#results-using-k-fold-validation"><i class="fa fa-check"></i><b>4.1</b> Results Using K-Fold Validation</a></li>
+</ul></li>
+<li class="chapter" data-level="5" data-path="5-discussion.html"><a href="5-discussion.html"><i class="fa fa-check"></i><b>5</b> Discussion</a></li>
+<li class="chapter" data-level="6" data-path="6-appendix.html"><a href="6-appendix.html"><i class="fa fa-check"></i><b>6</b> Appendix</a><ul>
+<li class="chapter" data-level="6.1" data-path="6-appendix.html"><a href="6-appendix.html#example-row-of-dataframe-used-for-modeling-the-game-score"><i class="fa fa-check"></i><b>6.1</b> Example Row of Dataframe used for Modeling the Game Score</a></li>
+<li class="chapter" data-level="6.2" data-path="6-appendix.html"><a href="6-appendix.html#modeling-number-of-observations-1"><i class="fa fa-check"></i><b>6.2</b> Modeling Number of Observations</a></li>
+<li class="chapter" data-level="6.3" data-path="6-appendix.html"><a href="6-appendix.html#example-row-of-test-data-set-with-probabilities"><i class="fa fa-check"></i><b>6.3</b> Example Row of Test Data set with Probabilities</a></li>
+<li class="chapter" data-level="6.4" data-path="6-appendix.html"><a href="6-appendix.html#diagnostics-for-random-effects-in-mixed-linear-models-for-the-score-difference"><i class="fa fa-check"></i><b>6.4</b> Diagnostics for Random Effects in Mixed-Linear Models for the Score Difference</a></li>
+</ul></li>
+<li class="chapter" data-level="7" data-path="7-references.html"><a href="7-references.html"><i class="fa fa-check"></i><b>7</b> References</a></li>
+<li class="divider"></li>
+<li><a href="https://github.com/rstudio/bookdown" target="blank">Published with bookdown</a></li>
+</ul>
+
+      </nav>
+    </div>
+
+    <div class="book-body">
+      <div class="body-inner">
+        <div class="book-header" role="navigation">
+          <h1>
+            <i class="fa fa-circle-o-notch fa-spin"></i><a href="./">Beating Vegas: Creating a Dynamic Sports Betting Model</a>
+          </h1>
+        </div>
+
+        <div class="page-wrapper" tabindex="-1" role="main">
+          <div class="page-inner">
+
+            <section class="normal" id="section-">
+<div id="header">
+<h1 class="title">Beating Vegas: Creating a Dynamic Sports Betting Model</h1>
+<p class="author"><em>Daniel A. Levine</em></p>
+<p class="date"><em>April 19, 2019</em></p>
+</div>
+<div id="introduction" class="section level1">
+<h1><span class="header-section-number">Chapter 1</span> Introduction</h1>
+<p>Leading up to each NFL game, “bookmakers”, or casino staff, place a “spread” on which casino patrons can bet. The bookmakers create a spread for the game because most NFL games feature unbalanced teams, and the result of the game is not in much question; however, the amount by which the superior team will win creates a more fair proposition. The spread is the amount by which the bookmakers think the superior team will win. For example, the spread for the Super Bowl was the New England Patriots (-2.0) versus the Los Angeles Rams. This means the bookmakers expected the Patriots to win by 2 points. For the Patriots to beat the spread, they needed to win the game by greater than 2 points – which they did, as they won the game 13 - 3.</p>
+<p>For the casino, the goal of creating this supposed fair value proposition is to give its patrons the opportunity to bet on the result of an NFL game with what should be a 50/50 proposition. However, the casino uses unfair odds to create an edge for itself. For a bet against the spread, a bettor must place 11 units in order to win 10 units.</p>
+<p>This means that if there is an equal amount of money on both teams, the casino wins money. For example, if both teams have 11 units placed on them to beat the spread, the casino is guaranteed to make money. This is because one team will beat the spread and win 10 units for its bettor, while the other team will fail to cover the spread and instead lose 11 units for its bettor. Thus, for 22 units bet on the game, the casino is guaranteed to win 1 unit. So, their return is a guaranteed <span class="math inline">\(\frac{1}{22} = 4.5\%\)</span>.</p>
+<p>In most cases, the casino looks to place the spread at a point that will generate equal amount of money on both sides – not the true number of points by which they think a team will win. As a result, there is value in this market in finding the instances where the true result differs greatly from the spread. These points of value often come from betting against popular or trendy picks, as the market (or the bettors) tend to overreact to recent performance, as well as big-name players. If there are unequal amounts of money on each side leading up to the game, the casino will adjust the spread throughout the week. This means there are certain points in the week where it is more advantageous to bet on a certain team.</p>
+<p>In addition, there are also times when the casino fails to move the spread even with unequal amounts of money on both sides. This means that the casino is essentially placing a bet that the side the public bets more on will lose. The cliche states, “the casino always wins”. It is important to identify the times when a casino is placing a bet in order to bet on the same side as the casino.</p>
+<p>The goal of this project is to create a betting model that provides a statistical basis for choosing the timing, team and amount to bet on a certain game. To do this, I first create a model to forecast the spread throughout the week, as to determine when exactly in the week is the most advantageous point to bet. Treating the spread as a time series object is a good method to achieve this goal. Second, I create a model that can predict the difference in score between the two teams playing and provide a probability point estimate for each team “beating the spread”. Using this probability and the fact that a bettor must bet 11 units to win 10 units, I generate an expected value for betting on each team. In order to have a positive expected value to bet on a game, the probability point estimate must be greater than 52.8%. In addition, the forecasted spreads helps determine whether it would be more advantageous to wait to bet on the game. Finally, after generating expected value for all the games, I simulate how my models perform using a variety of different betting strategies. I examine the distribution of winnings for each betting strategy after running the simulations numerous times. Each betting strategy has different rules and parameters that determine the stake and timing of each bet. One key note is that there will not be a bet placed on every game, as if the model predicts a 50% probability of a team beating the spread, the expected value for betting on this game for either team is negative. Thus, it is not always advantageous to bet on the games.</p>
+<p>The remainder of this thesis is organized as followed: in Section 2, I discuss how I gathered my data and the techniques I used for organizing these data into a usable format. In Section 3, I discuss my two different modeling techniques – starting first with the model to forecast the spread throughout the week before moving into the to predict the score of the game. Section 4 discusses my nine different betting strategies and evaluates the distribution of outcomes resulting from these betting strategies. Finally, Section 5 wraps up this thesis with a discussion of the process, feasibility and next steps for this project.</p>
+</div>
+            </section>
+
+          </div>
+        </div>
+      </div>
+
+<a href="2-data.html" class="navigation navigation-next navigation-unique" aria-label="Next page"><i class="fa fa-angle-right"></i></a>
+    </div>
+  </div>
+<script src="libs/gitbook-2.6.7/js/app.min.js"></script>
+<script src="libs/gitbook-2.6.7/js/lunr.js"></script>
+<script src="libs/gitbook-2.6.7/js/plugin-search.js"></script>
+<script src="libs/gitbook-2.6.7/js/plugin-sharing.js"></script>
+<script src="libs/gitbook-2.6.7/js/plugin-fontsettings.js"></script>
+<script src="libs/gitbook-2.6.7/js/plugin-bookdown.js"></script>
+<script src="libs/gitbook-2.6.7/js/jquery.highlight.js"></script>
+<script>
+gitbook.require(["gitbook"], function(gitbook) {
+gitbook.start({
+"sharing": {
+"github": false,
+"facebook": true,
+"twitter": true,
+"google": false,
+"linkedin": false,
+"weibo": false,
+"instapaper": false,
+"vk": false,
+"all": ["facebook", "google", "twitter", "linkedin", "weibo", "instapaper"]
+},
+"fontsettings": {
+"theme": "white",
+"family": "sans",
+"size": 2
+},
+"edit": {
+"link": null,
+"text": null
+},
+"history": {
+"link": null,
+"text": null
+},
+"download": [["thesis.pdf", "PDF"], ["thesis.epub", "EPUB"], ["thesis.docx", "Word"]],
+"toc": {
+"collapse": "section"
+}
+});
+});
+</script>
+
+<!-- dynamically load mathjax for compatibility with self-contained -->
+<script>
+  (function () {
+    var script = document.createElement("script");
+    script.type = "text/javascript";
+    var src = "";
+    if (src === "" || src === "true") src = "https://mathjax.rstudio.com/latest/MathJax.js?config=TeX-MML-AM_CHTML";
+    if (location.protocol !== "file:" && /^https?:/.test(src))
+      src = src.replace(/^https?:/, '');
+    script.src = src;
+    document.getElementsByTagName("head")[0].appendChild(script);
+  })();
+</script>
+</body>
+
+</html>
