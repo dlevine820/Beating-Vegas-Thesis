@@ -1,6 +1,6 @@
 ---
 author: 'Daniel A. Levine'
-date: 'April 19, 2019'
+date: 'May 2019'
 institution: 'Duke University'
 division: 'Trinity College of Arts and Sciences'
 advisor: 'Jerome P. Reiter'
