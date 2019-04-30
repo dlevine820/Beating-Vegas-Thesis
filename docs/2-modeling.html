@@ -1,0 +1,801 @@
+<!DOCTYPE html>
+<html >
+
+<head>
+
+  <meta charset="UTF-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <title>Chapter 2 Modeling | Beating Vegas: Creating a Dynamic Sports Betting Model</title>
+  <meta name="description" content="Chapter 2 Modeling | Beating Vegas: Creating a Dynamic Sports Betting Model">
+  <meta name="generator" content="bookdown  and GitBook 2.6.7">
+
+  <meta property="og:title" content="Chapter 2 Modeling | Beating Vegas: Creating a Dynamic Sports Betting Model" />
+  <meta property="og:type" content="book" />
+  
+  
+  
+  
+
+  <meta name="twitter:card" content="summary" />
+  <meta name="twitter:title" content="Chapter 2 Modeling | Beating Vegas: Creating a Dynamic Sports Betting Model" />
+  
+  
+  
+
+<meta name="author" content="Daniel A. Levine">
+
+
+
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta name="apple-mobile-web-app-capable" content="yes">
+  <meta name="apple-mobile-web-app-status-bar-style" content="black">
+  
+  
+<link rel="prev" href="index.html">
+<link rel="next" href="3-betting-strategy.html">
+<script src="libs/jquery-2.2.3/jquery.min.js"></script>
+<link href="libs/gitbook-2.6.7/css/style.css" rel="stylesheet" />
+<link href="libs/gitbook-2.6.7/css/plugin-table.css" rel="stylesheet" />
+<link href="libs/gitbook-2.6.7/css/plugin-bookdown.css" rel="stylesheet" />
+<link href="libs/gitbook-2.6.7/css/plugin-highlight.css" rel="stylesheet" />
+<link href="libs/gitbook-2.6.7/css/plugin-search.css" rel="stylesheet" />
+<link href="libs/gitbook-2.6.7/css/plugin-fontsettings.css" rel="stylesheet" />
+
+
+
+
+
+
+
+<script src="libs/kePrint-0.0.1/kePrint.js"></script>
+
+
+
+</head>
+
+<body>
+
+
+
+  <div class="book without-animation with-summary font-size-2 font-family-1" data-basepath=".">
+
+    <div class="book-summary">
+      <nav role="navigation">
+
+<ul class="summary">
+<li><a href="./"></a></li>
+<li class="divider"></li>
+<li class="chapter" data-level="1" data-path="index.html"><a href="index.html"><i class="fa fa-check"></i><b>1</b> Delete line 7 if you only have one advisor</a></li>
+<li class="chapter" data-level="2" data-path="2-modeling.html"><a href="2-modeling.html"><i class="fa fa-check"></i><b>2</b> Modeling</a><ul>
+<li class="chapter" data-level="2.1" data-path="2-modeling.html"><a href="2-modeling.html#point-spread-forecasting-model"><i class="fa fa-check"></i><b>2.1</b> Point Spread Forecasting Model</a><ul>
+<li class="chapter" data-level="2.1.1" data-path="2-modeling.html"><a href="2-modeling.html#exploratory-data-analysis"><i class="fa fa-check"></i><b>2.1.1</b> Exploratory Data Analysis</a></li>
+<li class="chapter" data-level="2.1.2" data-path="2-modeling.html"><a href="2-modeling.html#modeling-the-point-spread"><i class="fa fa-check"></i><b>2.1.2</b> Modeling the Point Spread</a></li>
+<li class="chapter" data-level="2.1.3" data-path="2-modeling.html"><a href="2-modeling.html#modeling-number-of-observations"><i class="fa fa-check"></i><b>2.1.3</b> Modeling Number of Observations</a></li>
+</ul></li>
+<li class="chapter" data-level="2.2" data-path="2-modeling.html"><a href="2-modeling.html#game-result-prediction"><i class="fa fa-check"></i><b>2.2</b> Game Result Prediction</a><ul>
+<li class="chapter" data-level="2.2.1" data-path="2-modeling.html"><a href="2-modeling.html#overview-of-decisions"><i class="fa fa-check"></i><b>2.2.1</b> Overview of Decisions</a></li>
+<li class="chapter" data-level="2.2.2" data-path="2-modeling.html"><a href="2-modeling.html#exploratory-data-analysis-1"><i class="fa fa-check"></i><b>2.2.2</b> Exploratory Data Analysis</a></li>
+<li class="chapter" data-level="2.2.3" data-path="2-modeling.html"><a href="2-modeling.html#model-selection"><i class="fa fa-check"></i><b>2.2.3</b> Model Selection</a></li>
+<li class="chapter" data-level="2.2.4" data-path="2-modeling.html"><a href="2-modeling.html#simulations"><i class="fa fa-check"></i><b>2.2.4</b> Simulations</a></li>
+<li class="chapter" data-level="2.2.5" data-path="2-modeling.html"><a href="2-modeling.html#model-selection-1"><i class="fa fa-check"></i><b>2.2.5</b> Model Selection</a></li>
+</ul></li>
+</ul></li>
+<li class="chapter" data-level="3" data-path="3-betting-strategy.html"><a href="3-betting-strategy.html"><i class="fa fa-check"></i><b>3</b> Betting Strategy</a><ul>
+<li class="chapter" data-level="3.1" data-path="3-betting-strategy.html"><a href="3-betting-strategy.html#results-using-k-fold-validation"><i class="fa fa-check"></i><b>3.1</b> Results Using K-Fold Validation</a></li>
+</ul></li>
+<li class="chapter" data-level="4" data-path="4-discussion.html"><a href="4-discussion.html"><i class="fa fa-check"></i><b>4</b> Discussion</a></li>
+<li class="chapter" data-level="5" data-path="5-appendix.html"><a href="5-appendix.html"><i class="fa fa-check"></i><b>5</b> Appendix</a><ul>
+<li class="chapter" data-level="5.1" data-path="5-appendix.html"><a href="5-appendix.html#example-row-of-dataframe-used-for-modeling-the-game-score"><i class="fa fa-check"></i><b>5.1</b> Example Row of Dataframe used for Modeling the Game Score</a></li>
+<li class="chapter" data-level="5.2" data-path="5-appendix.html"><a href="5-appendix.html#modeling-number-of-observations-1"><i class="fa fa-check"></i><b>5.2</b> Modeling Number of Observations</a></li>
+<li class="chapter" data-level="5.3" data-path="5-appendix.html"><a href="5-appendix.html#example-row-of-test-data-set-with-probabilities"><i class="fa fa-check"></i><b>5.3</b> Example Row of Test Data set with Probabilities</a></li>
+<li class="chapter" data-level="5.4" data-path="5-appendix.html"><a href="5-appendix.html#diagnostics-for-random-effects-in-mixed-linear-models-for-the-score-difference"><i class="fa fa-check"></i><b>5.4</b> Diagnostics for Random Effects in Mixed-Linear Models for the Score Difference</a></li>
+</ul></li>
+<li class="chapter" data-level="6" data-path="6-references.html"><a href="6-references.html"><i class="fa fa-check"></i><b>6</b> References</a></li>
+<li class="divider"></li>
+<li><a href="https://github.com/rstudio/bookdown" target="blank">Published with bookdown</a></li>
+</ul>
+
+      </nav>
+    </div>
+
+    <div class="book-body">
+      <div class="body-inner">
+        <div class="book-header" role="navigation">
+          <h1>
+            <i class="fa fa-circle-o-notch fa-spin"></i><a href="./">Beating Vegas: Creating a Dynamic Sports Betting Model</a>
+          </h1>
+        </div>
+
+        <div class="page-wrapper" tabindex="-1" role="main">
+          <div class="page-inner">
+
+            <section class="normal" id="section-">
+<div id="modeling" class="section level1">
+<h1><span class="header-section-number">Chapter 2</span> Modeling</h1>
+<p>I have two separate aspects to modeling: forecasting the point spread throughout the week and predicting the score of the game. For both processes, I tried different approaches to modeling and chose the best performing model based on performance on test datasets.</p>
+<div id="point-spread-forecasting-model" class="section level2">
+<h2><span class="header-section-number">2.1</span> Point Spread Forecasting Model</h2>
+<p>I forecasted the point spread throughout the week by treating this object as a time-series. I explored the data with an aim to find the best approach to modeling, before then moving into the modeling procedure. The best performing model was a time-varying Bayesian Dynamic Linear Regression model that used ARIMA (Autoregressive Integrated Moving Average) methods to forecast the time-varying parameters that are used to forecast the point spread in the Dynamic Linear Regression Model. In addition, for utilizing the model, I needed to determine how many data points will be in the series. I used a mixed linear regression model for this purpose.</p>
+<div id="exploratory-data-analysis" class="section level3">
+<h3><span class="header-section-number">2.1.1</span> Exploratory Data Analysis</h3>
+<div class="figure" style="text-align: center"><span id="fig:unnamed-chunk-3"></span>
+<img src="thesis_files/figure-html/unnamed-chunk-3-1.png" alt="\label{fig:hist_ps_sd}Histograms of Point Spreads and Score Differences from Games" width="672" />
+<p class="caption">
+Figure 2.1: Histograms of Point Spreads and Score Differences from Games
+</p>
+</div>
+<p>The first aspect to examine when forecasting the spreads is the distribution of spreads. It is also important to look at the distribution of game outcomes that these spreads model. Figure  shows both of these distributions. Both have multiple peaks. These multiple peaks arise because in football, nearly all scores are worth <span class="math inline">\(3\)</span> or <span class="math inline">\(7\)</span> points. When predicting the difference between two teams, many games will end up with a forecasted spread near these key numbers, and the results of these games will fall at these numbers often. In addition, there are a few dead zones – mainly in between <span class="math inline">\(0\)</span> and <span class="math inline">\(3\)</span>. The results of the games mirror the distribution of the forecast spreads, however, with a much wider distribution. It is difficult to forecast a blowout game, but they do occur, which is why there are much longer tails for the true score differences.</p>
+<div class="figure" style="text-align: center"><span id="fig:unnamed-chunk-4"></span>
+<img src="thesis_files/figure-html/unnamed-chunk-4-1.png" alt="\label{fig:hist_gr_sp}Histogram of Game Results against Spread" width="672" />
+<p class="caption">
+Figure 2.2: Histogram of Game Results against Spread
+</p>
+</div>
+<p>Figure  shows a distribution of the result of the game against the spread. A result of <span class="math inline">\(0\)</span> would indicate that the game ended with the same result as the spread, and the result of the game would be a push, meaning that nobody wins and the bettor’s stake is returned to the better. To demonstrate the accuracy of the bookmaker’s, it is evident that the distribution is relatively normally distributed around <span class="math inline">\(0\)</span>, with a second peak at <span class="math inline">\(-3\)</span> indicating that many of the games resulted in the home team beating the spread by <span class="math inline">\(3\)</span> points.</p>
+<div class="figure" style="text-align: center"><span id="fig:unnamed-chunk-5"></span>
+<img src="thesis_files/figure-html/unnamed-chunk-5-1.png" alt="\label{fig:trans}Transformations of Key Betting-Statistic Variables" width="672" />
+<p class="caption">
+Figure 2.3: Transformations of Key Betting-Statistic Variables
+</p>
+</div>
+<p>Research suggests that casinos adjust the line based on the amount of cash bet on each side, so that they can even out the amount of money bet on each time and guarantee themselves a return. Examining the cash variables can help evaluate this research. Figure  demonstrates the skewness of the cash and ticket number variables, as well as updated distributions after transformations. The cash variable is very right-skewed. For modeling and interpretability, it is integral to transform this variable into the log of the cash bet. The number of bets on each side is also right skewed. The <span class="math inline">\(\log(\text{Away Cash Bet})\)</span> and <span class="math inline">\(\log(\text{Away Number of Bets})\)</span> are both significantly closer to normally distributed.</p>
+<div class="figure" style="text-align: center"><span id="fig:unnamed-chunk-6"></span>
+<img src="thesis_files/figure-html/unnamed-chunk-6-1.png" alt="\label{fig:line_diff}Line Difference versus Key Variables" width="672" />
+<p class="caption">
+Figure 2.4: Line Difference versus Key Variables
+</p>
+</div>
+<p>Figure  shows the the line difference from when the casino first listed the spread to the spread when the game started compared with the cash percentage and the <span class="math inline">\(\log(\text{Away Cash Bet})\)</span>. Research suggests that with more cash bet on the away team, the casino would want to make the spread less favorable for the away team, in an effort to get more money placed on the home team and achieve a 50/50 split.</p>
+<p>Here, while the effect is not major, for both the away cash percentage and away cash amount variables, as they increase, the line difference for the away tends to become more negative. This means that when more cash is on the away team, the spread tends to become more favorable to the home team. For example, a line difference of -2 means that the initial spread could have been the away team is favored by 6 points (-6), but then the spread moved to make the away team favored by 8 points (-8). The away team must now win by more than 8 points to cover the spread, opposed to the previous point where the away team only needed to win by more than 6 points.</p>
+<p>There are a few outliers where the line difference is greater than 5 points. This sort of extreme movement only can occur due to big player news. For example, if there is news on the Friday leading up to the game that Tom Brady is injured and cannot play, this would cause a massive swing in the line that would not be related to the cash and ticket percentages.</p>
+</div>
+<div id="modeling-the-point-spread" class="section level3">
+<h3><span class="header-section-number">2.1.2</span> Modeling the Point Spread</h3>
+<p>After exploratory data analysis, the next step is finding the best model to forecast the future spread. The model needs to forecast what the spread will be from a certain decision point. This first decision point is the first point when bets will be placed. The chosen decision point is after two-thirds of the observations in each time-series. The data frame containing the observations for each game is cut off at the two-thirds mark, and the model then forecasts the point spread for the final one-third of observations, using only the information up to this two-thirds point. I consider a Bayesian and frequentist approach to modeling the point spread. After forecasting the point spread for the final one-third observations, I calculate the error for each model by finding the difference between the forecasted point spread and true point spread for each observation. I use the forecasts from the model with the lowest average error across all my time-series’ in my betting strategies.</p>
+<p>The Bayesian approach to modeling is a time-series random walk plus noise regression model. The process starts by placing a prior for the parameters in my model before updating these parameters with the posterior mean through finding the MLE of the parameters of this regression model. The regressors in the model are the <span class="math inline">\(\log(\text{Away Cash Bet})\)</span>, Away Number of Bets (Away Ticket Number), <span class="math inline">\(\log(\text{Home Cash Bet})\)</span> and Home Number of Bets (Home Ticket Number).</p>
+<p>The full process of creating the dynamic linear model is demonstrated through the example of the Week 2, 2018 game between the Minnesota Vikings and the Green Bay Packers.</p>
+<p>Equations  and  express a dynamic linear regression model with time-varying parameters.</p>
+<span class="math display">\[\begin{eqnarray}
+  y_{t} =&amp; \textbf{X}_{t}^{&#39;} \ \theta_{t} + v_{t} \hspace{.5cm} v_{t} \sim&amp; N(0, V_{t}) \text{; (observation equation)} \label{eqn:basic_dlm} \\ 
+  \theta_{t} =&amp; G_{t} \ \theta_{t-1} + \omega_{t} \hspace{.5cm} \omega_{t} \sim&amp; N(0, W_{t}) \text{; (evolution equation).} \label{eqn:basic_dlm2}
+  \end{eqnarray}\]</span>
+<p>The vector of observations up to time <span class="math inline">\(t\)</span> is <span class="math inline">\(y^{t} = (y_1, ..., y_t)\)</span>. The observation equation (equation 5) describes the vector of observations <span class="math inline">\(y_{t}\)</span> (the spread at time <span class="math inline">\(t\)</span>) through its State vector <span class="math inline">\(\theta_{t}\)</span> (the predictor variables at time <span class="math inline">\(t\)</span>) and the vector of noise from the observations <span class="math inline">\(v_t\)</span>. The evolution equation (equation 6) describes the evolution of the state vector over time with a Markov structure. <span class="math inline">\(\theta_{t}\)</span> is the state vector of the time-varying regression parameters (of number <span class="math inline">\(p\)</span>); <span class="math inline">\(\theta_{t} = (\alpha_{t} \ ; \beta_{t})^{&#39;}\)</span> with dimension <span class="math inline">\(p \times 1\)</span>. <span class="math inline">\(\alpha_{t}\)</span> and <span class="math inline">\(\beta_{t}\)</span> are the regression coefficients <span class="math inline">\(\textbf{X}_{t}^{&#39;}\)</span> is the row vector of covariates at time t of dimension <span class="math inline">\(1 \times p\)</span>. <span class="math inline">\(w_t\)</span> is the variance of the state-space vectors. <span class="math inline">\(G_{t}\)</span> is an evolution matrix of <span class="math inline">\(p \times p\)</span> dimension. This is the evolution matrix because it allows for the evolution of the state space vector by matching up the dimensions the parameters. <span class="math inline">\(G_{t}\)</span> is typically, and in this model, an identity matrix.</p>
+<p>This is the general setup for a dynamic linear regression model. Equations  —  show the expansion of equation .</p>
+<span class="math display">\[\begin{eqnarray}
+  y_{t} = \alpha_{t} + \beta_{t} \ \textbf{X}^{&#39;}_{t} + v_{t} \hspace{1cm} v_{t} &amp;\sim&amp; N(0, V_t) \label{eqn:gen_dlm1} \\
+  \alpha_{t} = \alpha_{t-1} + \epsilon_{t}^{\alpha} \hspace{1cm} \epsilon_{t}^{\alpha} &amp;\sim&amp; N(0, \sigma^{2}_{\alpha}) \label{eqn:gen_dlm2} \\
+  \beta_{t} = \beta_{t-1} + \epsilon_{t}^{\beta} \hspace{1cm} \epsilon_{t}^{\beta} &amp;\sim&amp; N(0, \sigma^{2}_{\beta}) \label{eqn:gen_dlm3}
+  \end{eqnarray}\]</span>
+<p>There are three parameters that need to be set, and that is the variance of the observations <span class="math inline">\(V_t\)</span>, and then the variances of the regression coefficients for the state-space vector – <span class="math inline">\(\sigma^{2}_{\alpha}\)</span> and <span class="math inline">\(\sigma^{2}_{\beta}\)</span>.</p>
+<p>This can be done through a Bayesian method, where the initial parameter start values are set, and then through finding the MLE of the DLM using the , these parameters are updated with the posterior mean. I used sample observational variance of the spread up to the first decision point as the starting value of the observational variance <span class="math inline">\(V\)</span>. I used a flat prior for the variances of the regression parameters have a flat prior. Table  shows the values for the prior and posterior means of the variance parameters.</p>
+<table>
+<caption>
+<span id="tab:unnamed-chunk-8">Table 2.1: </span>Prior and Posterior Values for Variance Parameters
+</caption>
+<thead>
+<tr>
+<th style="text-align:left;">
+</th>
+<th style="text-align:right;">
+Prior Parameters
+</th>
+<th style="text-align:right;">
+Posterior Parameters
+</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td style="text-align:left;">
+<span class="math inline">\(V\)</span>
+</td>
+<td style="text-align:right;">
+0.5261619
+</td>
+<td style="text-align:right;">
+0.0040991
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+<span class="math inline">\(\sigma^{2}_{\alpha}\)</span>
+</td>
+<td style="text-align:right;">
+0.0000000
+</td>
+<td style="text-align:right;">
+0.0996949
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+<span class="math inline">\(\sigma^{2}_{\beta}\)</span>
+</td>
+<td style="text-align:right;">
+0.0000000
+</td>
+<td style="text-align:right;">
+0.0000000
+</td>
+</tr>
+</tbody>
+</table>
+<p>The posterior mean for the <span class="math inline">\(\sigma^{2}_{\alpha}\)</span> and <span class="math inline">\(\sigma^{2}_{\beta}\)</span> values are used diagonally in the <span class="math inline">\(\omega_t\)</span> matrix. Looking back at equations  and , <span class="math inline">\(\theta_t\)</span> for each observation is found through using <span class="math inline">\(\alpha_t\)</span> and <span class="math inline">\(\beta_t\)</span> values, which are drawn through <span class="math inline">\(\sigma^{2}_{\alpha}\)</span> and <span class="math inline">\(\sigma^{2}_{\beta}\)</span>. The values of the design vector <span class="math inline">\(\textbf{X}^{&#39;}_{t}\)</span> comes directly from the predictors and the variance for <span class="math inline">\(V\)</span> is set. Thus, all the parameters needed for modeling are set, and I use a dynamic linear regression model through the function  to calculate my values for the observational values (<span class="math inline">\(y_t\)</span>) and the state-space parameters (<span class="math inline">\(\theta_t\)</span>). This is done through the filtering method.</p>
+<p>The filtering distribution takes in the DLM, and returns a series of one-step forecasts for the observations. These one-step forecasts are created from filtering all the information up to time <span class="math inline">\(t\)</span>. The first step of the filtering distribution has a starting value <span class="math inline">\(\theta_0 \sim N(m_0, C_0)\)</span>. <span class="math inline">\(m_0\)</span> and <span class="math inline">\(C_0\)</span> are the pre-sample means and variances for <span class="math inline">\(\theta\)</span>.</p>
+
+<p>Creating a filtered distribution with the  function returns a series of one-step forecasts and variances for the observations, as well as the same information for the state-space vector.</p>
+<p>For a time-invariant dynamic linear model, there would be no extra work for finding a forecast for the observations after a given point <span class="math inline">\(t\)</span>. But, for a time-varying model, such as this, the <span class="math inline">\(\textbf{X}^{&#39;}_{t}\)</span> values are also unknown past the given point <span class="math inline">\(t\)</span>. The Kalman filtering method extends the time-series with new future predictor values, but does not input future values for the observational values. Once the future predictor values are entered, I create a filtered distribution with this new set – using the filtered values of the extended observational values as my forecast.</p>
+<p>There are a few common methods for finding new methods for the predictor values, such as inputting the last known observation, the mean or the median. However, since my predictor values continue to grow, these methods do not apply to this model. So, at the decision point, I fit ARIMA models for each of my new predictor values. I used the  method to generate these new values for each of my predictor variables. Using the ARIMA method is a frequentist approach to a time-series forecast. I used this approach because for two reasons: it is unrealistic to build a separate Bayesian DLM for each parameter and these parameters simply grow without fluctuation (unlike the point spread), so it is not as necessary to build as complex of a model. There are three parameters that go into that ARIMA method:  is the number of lag observations in the model,  is the degree of differencing and  is the order of the moving average.</p>
+<p>The  function automatically chooses the best  and  values that will minimize the AIC and BIC of the model. However, by setting the seasonal parameter to “false”, I ensured that no model that incorporated a seasonal trend is chosen because that would not fit these data. Figure  is the forecasted number of tickets versus the true number of tickets for the Green Bay Packers versus Minnesota Vikings game. While this forecast is certainly not perfect, it generally follows a similar path to the true value. This is certainly an imperfect method and one area for improvement in this facet of the model.</p>
+<div class="figure" style="text-align: center"><span id="fig:unnamed-chunk-9"></span>
+<img src="thesis_files/figure-html/unnamed-chunk-9-1.png" alt="\label{fig:tickfore}Forecasted versus True Away Ticket Number" width="672" />
+<p class="caption">
+Figure 2.5: Forecasted versus True Away Ticket Number
+</p>
+</div>
+<p>This forecast model for the number of tickets is an ARIMA(1, 2, 2) model that is expressed in Equations  and .</p>
+<span class="math display">\[\begin{eqnarray}
+  \hat{Y_t} =&amp; \hat{y_t} + 2Y_{t-1} - Y_{t-2} \label{eqn:arima112} \\
+  \hat{y_t} =&amp; \mu + AR1 \cdot y_{t-1} - MA1 \cdot e_{t-1} - MA2 \cdot e_{t-2} \label{eqn:arima1122}
+\end{eqnarray}\]</span>
+<p>Table  displays the coefficients to the ARIMA(1, 2, 2) model.</p>
+<table>
+<caption>
+<span id="tab:unnamed-chunk-10">Table 2.2: </span>Coefficients of ARIMA(1, 2, 2) Model for Away Ticket Number
+</caption>
+<thead>
+<tr>
+<th style="text-align:left;">
+</th>
+<th style="text-align:right;">
+Coefficient
+</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td style="text-align:left;">
+AR1
+</td>
+<td style="text-align:right;">
+-0.9895154
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+MA1
+</td>
+<td style="text-align:right;">
+0.1705304
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+MA2
+</td>
+<td style="text-align:right;">
+-0.4278727
+</td>
+</tr>
+</tbody>
+</table>
+<div class="figure" style="text-align: center"><span id="fig:unnamed-chunk-11"></span>
+<img src="thesis_files/figure-html/unnamed-chunk-11-1.png" alt="\label{fig:diag112}Diagnostic Plots for ARIMA(1, 2, 2) Model for Away Ticket Number" width="672" />
+<p class="caption">
+Figure 2.6: Diagnostic Plots for ARIMA(1, 2, 2) Model for Away Ticket Number
+</p>
+</div>
+<p>Figure 6 is the diagnostic plots for the  method for forecasting the number of tickets for the away team. The plots show that this model is a pretty good fit for the data, as the standardized residuals generally look like white noise, though the p-values for autocorrelation become significant when the lag factor reaches high values such as 9. As these models are automatically fitted to best describe the data at hand, they generally fit the data pretty well.</p>
+<p>It is important to note that the automatic ARIMA is fit for each different new variable from each time-series (opposed to using the same ARIMA model for the cash bet for all series) because the trends are not the same across all series. While bookmakers generally look to obtain 50/50 amount of cash on each game, this is certainly not always the case, as bookmakers will take a position on many of the games. Thus, the automatic ARIMA model will fit the model best to the data for each of the predictor variables.</p>
+<p>Finally, after generating new values for the predictor variables in my DLM, the Kalman filtering method can be used to find predictions for the spread. This method follows the exact same approach as above, however, the one-step forecasts for the last third of observations will replace the NAs.</p>
+<p>In addition, for comparison, the spread is also modeled with the  forecast, using the same predictor variables as the Bayesian DLM as regressors. This is a frequentist approach for modeling each time-series. The accuracy of each approach is determined by looking at the average error in the predicted spread values versus the true spread values.</p>
+<p>For this example game between the Green Bay Packers and the Minnesota Vikings, the  method fit an ARIMA(1, 0, 0) model, which is a first-order autoregressive model.</p>
+Equation  expresses this model.
+<span class="math display">\[\begin{equation}
+\label{eq:arima100}
+Y_t = c + \phi_{p} Y_{t-1} + \epsilon_t \hspace{.5cm} \epsilon_t \sim N(0, \sigma^{2}_{\epsilon})
+    \end{equation}\]</span>
+<p><span class="math inline">\(c\)</span> is the intercept or the constant in the equation and <span class="math inline">\(\phi_{p}\)</span> is the vector of coefficients for the autoregressive term (AR), as well as all the predictors. Table  shows the coefficients of this model and the variance parameter <span class="math inline">\(\sigma_{\epsilon}^{2}\)</span> = <span class="math inline">\(0.00595\)</span>.</p>
+<table>
+<caption>
+<span id="tab:unnamed-chunk-12">Table 2.3: </span>Coeffecients of ARIMA(1, 0, 0) Model for the Point Spread
+</caption>
+<thead>
+<tr>
+<th style="text-align:left;">
+</th>
+<th style="text-align:right;">
+Coeffecient
+</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td style="text-align:left;">
+AR1
+</td>
+<td style="text-align:right;">
+0.8548193
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+Intercept
+</td>
+<td style="text-align:right;">
+-2.4132144
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+Log Away Cash
+</td>
+<td style="text-align:right;">
+-0.0153527
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+Log Home Cash
+</td>
+<td style="text-align:right;">
+0.0008310
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+Away Ticket Number
+</td>
+<td style="text-align:right;">
+-0.0543334
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+Home Ticket Number
+</td>
+<td style="text-align:right;">
+0.0022097
+</td>
+</tr>
+</tbody>
+</table>
+<div class="figure" style="text-align: center">
+<img src="thesis_files/figure-html/plotting%20showing%20Fit2%20for%20time%20series-1.png" alt="\label{fig:spvfore}Spread versus Forecasts for Minnesota Vikings at Green Bay Packers Week 2, 2018" width="672" />
+<p class="caption">
+(#fig:plotting showing Fit2 for time series)Spread versus Forecasts for Minnesota Vikings at Green Bay Packers Week 2, 2018
+</p>
+</div>
+<p>Figure  compares the Bayesian DLM and the frequentist ARIMA model’s predictions with the true final spread values from the game between the Minnesota Vikings and the Green Bay Packers. The blue line represents the true spread, while the red and green lines represent the Bayesian and frequentist forecasts, respectively. Both forecasts correctly predict the spread to rise. However, the Bayesian approach does a better job, in this scenario, of being closer to the true spread values.</p>
+<div class="figure" style="text-align: center"><span id="fig:unnamed-chunk-14"></span>
+<img src="thesis_files/figure-html/unnamed-chunk-14-1.png" alt="\label{fig:sprvint}Spread versus Bayesian Forecast for Minnesota Vikings at Green Bay Packers Week 2, 2018 with 80% Confidence Interval" width="672" />
+<p class="caption">
+Figure 2.7: Spread versus Bayesian Forecast for Minnesota Vikings at Green Bay Packers Week 2, 2018 with 80% Confidence Interval
+</p>
+</div>
+<p>Figure  shows the Bayesian DLM forecast with a 80% confidence interval. I chose an 80% confidence based on trial and error. Here, while the spread at the decision point is within the 80% interval, there is a point when the spread reaches Vikings (-1) when the spread is out of the 80% interval. This will be a key distinction to make when it comes to betting strategies. Actually, this is why I chose an 80% confidence, as opposed to a more standard 95% confidence interval. With the wider 95% confidence interval, it is more rare for me to have a value outside of that interval. Since I make betting decisions based on whether the spread is within the selected interval, I use an interval that allows me to incorporate more instances of waiting to bet until the future spread moves to a more advantageous position. Also, while 95% confidence interval is more standard, the choice is as arbitrary as an 80% confidence interval.</p>
+<div class="figure" style="text-align: center"><span id="fig:unnamed-chunk-15"></span>
+<img src="thesis_files/figure-html/unnamed-chunk-15-1.png" alt="\label{fig:norqq}Normal QQ Plot for Residuals of the Forecasted Spread from the DLM" width="672" />
+<p class="caption">
+Figure 2.8: Normal QQ Plot for Residuals of the Forecasted Spread from the DLM
+</p>
+</div>
+<p>Figure  shows the residuals plot from the filtered distribution. The residuals do not seem to be completely normally distributed. This is due to the fact that the true spread can only move in increments of 0.5, which is a massive amount in terms of the jumps in the filtered values. When looking at the rounded values of the spread, however, the residuals are more likely to be normally distributed.</p>
+<div class="figure" style="text-align: center"><span id="fig:unnamed-chunk-16"></span>
+<img src="thesis_files/figure-html/unnamed-chunk-16-1.png" alt="\label{diagdlm}Diagnostic Plots for DLM of MIN at GB game" width="672" />
+<p class="caption">
+Figure 2.9: Diagnostic Plots for DLM of MIN at GB game
+</p>
+</div>
+<p>Figure  is the diagnostic plots for the Kalman-filtered model of the Minnesota Vikings at Green Bay Packers game. The p values for autocorrelation are all extremely high, indicating there is no autocorrelation. The residuals generally look like noise, with a few exceptions attributed to the nature of these data, and the ACF is within the bounds for all factors of the lag.</p>
+<p>After building two models, I chose to use the forecasts from the best performing model. For each time-series, the error is the sum of the difference between each true spread and predicted spread. Each method had a vector of errors of 414 errors.</p>
+<p>When looking at the error vectors, I removed 5 outliers where  had error sums above 100 total points. It is interesting to note that both models had the same forecasts for some series’ – especially those with the largest errors. These massive errors that both models found are likely due to games that were affected extraordinary circumstances for which my model cannot account. I did not use the time-series predictions for these 5 games for my simulations either.</p>
+<table>
+<caption>
+<span id="tab:unnamed-chunk-17">Table 2.4: </span>Sum of Error Greater than 100
+</caption>
+<thead>
+<tr>
+<th style="text-align:left;">
+gameID
+</th>
+<th style="text-align:right;">
+Week
+</th>
+<th style="text-align:right;">
+Year
+</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td style="text-align:left;">
+PHIvJAC
+</td>
+<td style="text-align:right;">
+8
+</td>
+<td style="text-align:right;">
+2018
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+GBvDET
+</td>
+<td style="text-align:right;">
+5
+</td>
+<td style="text-align:right;">
+2018
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+CARvATL
+</td>
+<td style="text-align:right;">
+2
+</td>
+<td style="text-align:right;">
+2018
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+LARvTEN
+</td>
+<td style="text-align:right;">
+16
+</td>
+<td style="text-align:right;">
+2017
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+LACvJAC
+</td>
+<td style="text-align:right;">
+10
+</td>
+<td style="text-align:right;">
+2017
+</td>
+</tr>
+</tbody>
+</table>
+<p>Table  shows the five games that were excluded. After taking a brief look at these games, it is noteworthy that the PHIvJAC game was played in London at 9:30AM ET (6:30AM PT) on a Sunday. The odd start time could have caused odd betting patterns where there were way fewer bets in the last third of observations than normal. Typically the amount of cash increases more linearly. However, with such an early start time on a Sunday morning, combined with the fact that people often have plans on Saturday nights, there may be a massive influx of money very close to the start of the game, as people wake up just before the game starts – opposed to having a few hours to place bets before the game starts.</p>
+<div class="figure" style="text-align: center"><span id="fig:unnamed-chunk-18"></span>
+<img src="thesis_files/figure-html/unnamed-chunk-18-1.png" alt="\label{fig:cashweek}Total Cash Bet on GB vs. MIN (left) compared to PHI vs. JAC (right) Throughout the Week" width="672" />
+<p class="caption">
+Figure 2.10: Total Cash Bet on GB vs. MIN (left) compared to PHI vs. JAC (right) Throughout the Week
+</p>
+</div>
+<p>Figure  represents the amount of cash bet throughout the week. The dotted line is the decision point. The charts show that the odd start time games have a significantly more massive exponential increase in the amount of money bet directly after the decision point. This makes these games tough to model. In addition, looking at the GB vs. DET game that was a massive outlier, star Green Bay Packers quarterback Aaron Rodgers was questionable to play throughout the week due to injury. He was finally announced as healthy late in the week. It is unclear the circumstances for the other three outliers.</p>
+<table>
+<caption>
+<span id="tab:unnamed-chunk-19">Table 2.5: </span>Summary Statistics for Errors
+</caption>
+<thead>
+<tr>
+<th style="text-align:left;">
+</th>
+<th style="text-align:right;">
+Min.
+</th>
+<th style="text-align:right;">
+1st Q
+</th>
+<th style="text-align:right;">
+Median
+</th>
+<th style="text-align:right;">
+Mean
+</th>
+<th style="text-align:right;">
+3rd Q
+</th>
+<th style="text-align:right;">
+Max
+</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td style="text-align:left;">
+DLM Errors
+</td>
+<td style="text-align:right;">
+-11.81761
+</td>
+<td style="text-align:right;">
+-0.5605623
+</td>
+<td style="text-align:right;">
+0
+</td>
+<td style="text-align:right;">
+0.0519290
+</td>
+<td style="text-align:right;">
+0.4935073
+</td>
+<td style="text-align:right;">
+38.05709
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+Auto ARIMA Errors
+</td>
+<td style="text-align:right;">
+-11.81761
+</td>
+<td style="text-align:right;">
+-0.5544576
+</td>
+<td style="text-align:right;">
+0
+</td>
+<td style="text-align:right;">
+0.0690394
+</td>
+<td style="text-align:right;">
+0.4947444
+</td>
+<td style="text-align:right;">
+38.05709
+</td>
+</tr>
+</tbody>
+</table>
+<table>
+<caption>
+<span id="tab:unnamed-chunk-20">Table 2.6: </span>Mean and Median Absolute Error
+</caption>
+<thead>
+<tr>
+<th style="text-align:left;">
+</th>
+<th style="text-align:right;">
+DLM
+</th>
+<th style="text-align:right;">
+Auto ARIMA
+</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td style="text-align:left;">
+Median Abs. Error
+</td>
+<td style="text-align:right;">
+0.5468115
+</td>
+<td style="text-align:right;">
+0.7686323
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+Mean Abs. Error
+</td>
+<td style="text-align:right;">
+1.4152842
+</td>
+<td style="text-align:right;">
+3.4088224
+</td>
+</tr>
+</tbody>
+</table>
+<p>Table  displays the summary statistics for my two vectors. these data shows that the DLM model has a lower mean error. In addition, when looking at simply absolute error, the Bayesian DLM approach provided a lower median absolute average error, as seen in Table , so I used this model’s forecasts for incorporating the future values from my decision point.</p>
+</div>
+<div id="modeling-number-of-observations" class="section level3">
+<h3><span class="header-section-number">2.1.3</span> Modeling Number of Observations</h3>
+<p>To predict how many future points to forecast from a certain time <span class="math inline">\(t\)</span>, I built a simple linear regression model. I gathered ten equally spaced data points from each of my data sets. Each data point contains information on the amount of total cash, total number of tickets and number of observations up to time <span class="math inline">\(t\)</span>, as well as the number of final data points in this series. One row of this data frame is shown in Section  of the Appendix. I then built a simple mixed linear regression model to forecast the number of total data points in the series, so I could find how many points <span class="math inline">\(h\)</span> I should use for forecasting at my decision point. While I considered using Poisson regression because the number of observations are a number of occurrences, the Poisson mixed linear and simple model did not fit the data as well as the linear mixed model, based on the diagnostics of the model. Equations  —  is the equation for this simple mixed model, with <span class="math inline">\(n_i\)</span> representing the amount of final observations in the series, while <span class="math inline">\(n_t\)</span> is the amount of observations up to time <span class="math inline">\(t\)</span>. Week is a factor and random effect (playoffs are treated here as week 0), as certain weeks attract more bettors than other weeks.</p>
+<span class="math display">\[\begin{eqnarray}
+  \notag &amp;\text{for} \ j \ in \ 0 \ , \ . . . \ , \ 17 \\
+    &amp;\hat{n_i} = \beta_{0} + \beta_{1} \cdot \log(\text{Total Cash Bet}) + \beta_{2} \cdot \log(\text{Total Tickets}) + \beta_{3} \cdot \text{n}_t + \alpha_j^{\text{week}} + \epsilon_i \label{eq:obsreg} \ \ \  \\
+  &amp;\epsilon_i \sim N(0, \sigma^2_{\text{residuals}}) \label{eq:obsreg2} \\
+  &amp;\alpha_j^{text{week}} \sim N(0, \sigma^2_{\text{week}}) \label{eq:obsreg3}
+  \end{eqnarray}\]</span>
+<p>The coefficients and diagnostics for this model are also shown in Section  of the Appendix, as this is a less essential part of the greater goal of this thesis.</p>
+</div>
+</div>
+<div id="game-result-prediction" class="section level2">
+<h2><span class="header-section-number">2.2</span> Game Result Prediction</h2>
+<div id="overview-of-decisions" class="section level3">
+<h3><span class="header-section-number">2.2.1</span> Overview of Decisions</h3>
+<p><img src="Betting%20Flow%20Chart.png" alt="Decision Flow Chart" /> </p>
+<p>Figure  shows a flow chart detailing the different possible scenarios and how much I would bet in each scenario. I use “allotment” to describe the betting amount because the many different betting strategies will bet different amounts for the same scenarios. The bookmakers open up betting on the game by placing an initial spread typically about a week before the game starts. I then wait until my decision point, forecast the spread for the rest of the week up until game time and provide a probability estimate for each team beating the spread. If betting on the game provides negative expected value based on the probability point estimate, I do not bet on the game, but I leave the opportunity open to bet later on in the week if a new, forecasted spread would make the advantageous to bet on. If the game has positive expected value, I place my bet on the game at the decision point. However, if the future forecasted spread projects a new spread that is even more advantageous to bet on, then I will only place a portion of my bet at the decision point and wait to place the rest of my bet. If the spread does in fact move as projected, I then place the rest of the bet the moment the spread hits my projections.</p>
+</div>
+<div id="exploratory-data-analysis-1" class="section level3">
+<h3><span class="header-section-number">2.2.2</span> Exploratory Data Analysis</h3>
+<div class="figure" style="text-align: center"><span id="fig:unnamed-chunk-22"></span>
+<img src="thesis_files/figure-html/unnamed-chunk-22-1.png" alt="\label{fig:grspd}Game Result Against Spread vs. Spread -- The red indicates that the team has beat the spread and the black indicates that the team has failed to beat the spread" width="672" />
+<p class="caption">
+Figure 2.11: Game Result Against Spread vs. Spread – The red indicates that the team has beat the spread and the black indicates that the team has failed to beat the spread
+</p>
+</div>
+<p>Some key decisions determine whether the actual spread itself was a major factor in predicting team performance against the spread. In Figure , the y variable is the score differential during the game subtracted by the spread, in order to standardize the scores. For example, if the away team wins by 11 points, and the spread had the away team favored by 10 points, the y-variable in this scenario would be 1, as the away team performed one point better than the spread. The x variable is the spread. The red points are the observations where the away team covered the spread and the black points are the observations where the home team covered the spread.</p>
+<p>The spread does not seem to have any impact on the team’s performance against the spread. This means that bookmakers do not have any dead zones in making spreads where a certain team is much more likely to beat the spread at a certain point. There do not seem to be any biases (either making spreads too small or too large), with respect to the spread and the performance.</p>
+<div class="figure" style="text-align: center"><span id="fig:unnamed-chunk-23"></span>
+<img src="thesis_files/figure-html/unnamed-chunk-23-1.png" alt="\label{fig:ctdiff}Result Against Spread vs. Cash-Ticket Percentage Difference -- The red indicates that the team has beat the spread and the black indicates that the team has failed to beat the spread" width="672" />
+<p class="caption">
+Figure 2.12: Result Against Spread vs. Cash-Ticket Percentage Difference – The red indicates that the team has beat the spread and the black indicates that the team has failed to beat the spread
+</p>
+</div>
+<p>Figure  examines the relationship between the cash and ticket percentages and the outcome against the spread. When there is a significantly higher percentage of cash bet on a team, in comparison to to the number of bets on a team, one of the teams is receiving larger bets. This is typically an indicator that professional bettors are betting on a team. Those who bet on sports for living tend to bet significantly more than those who bet recreationally, and the professional betters tend to be correct more often than the recreational betters.</p>
+<p>From Figure , when the cash percentage rises, in comparison to the ticket percentage, the team tends to perform slightly better, with respect to the spread. This is an indication that the cash-ticket difference may be a useful indicator of performance.</p>
+<div class="figure" style="text-align: center"><span id="fig:unnamed-chunk-24"></span>
+<img src="thesis_files/figure-html/unnamed-chunk-24-1.png" alt="\label{fig:grvaway}Game Result Against Spread vs. Away Win Percentage -- The red indicates that the team has beat the spread and the black indicates that the team has failed to beat the spread" width="672" />
+<p class="caption">
+Figure 2.13: Game Result Against Spread vs. Away Win Percentage – The red indicates that the team has beat the spread and the black indicates that the team has failed to beat the spread
+</p>
+</div>
+<div class="figure" style="text-align: center"><span id="fig:unnamed-chunk-25"></span>
+<img src="thesis_files/figure-html/unnamed-chunk-25-1.png" alt="\label{fig:cpvwp}Cash Percentage vs. Win Percentage -- The red indicates that the team has beat the spread and the black indicates that the team has failed to beat the spread" width="672" />
+<p class="caption">
+Figure 2.14: Cash Percentage vs. Win Percentage – The red indicates that the team has beat the spread and the black indicates that the team has failed to beat the spread
+</p>
+</div>
+<div class="figure" style="text-align: center"><span id="fig:unnamed-chunk-26"></span>
+<img src="thesis_files/figure-html/unnamed-chunk-26-1.png" alt="\label{fig:resbteam}Result versus Spread by Away Team" width="672" />
+<p class="caption">
+Figure 2.15: Result versus Spread by Away Team
+</p>
+</div>
+<p>Figure  shows a team’s performance against the spread relative to its current win percentage. The data shows that as the win percent rises for a team, its performance against the spread gets worse. This is indicative of the fact that many bettors overreact to past performance – especially when it comes to undefeated or winless teams, so the bookmakers will “shade” the lines against the more popular team. For example, if a team is 2-0, many bettors will overreact to a small sample size, and in order for the bookmakers to achieve equal amount of money on each team to guarantee themselves a profit, the bookmakers will move the line against the undefeated team. The opposite phenomena occurs for winless teams.</p>
+<p>Figure  shows that as win percentage increases, the cash percentage tends to increase. At the edges with win percentages of 0% and 100%, this trend seems to slightly reverse. This is likely due to bookmakers shading the lines at such an extreme amount for these extreme win percentages, where they are able to achieve nearly equal action.</p>
+<p>Figure  shows the result against the spread for each away team. There is great variation among all the teams, and while certain teams seemed to perform better against the spread, like the New Orleans Saints, treating the team as a random effect in modeling seems to suit the data.</p>
+</div>
+<div id="model-selection" class="section level3">
+<h3><span class="header-section-number">2.2.3</span> Model Selection</h3>
+<p>There were a few different approaches to modeling that deserved consideration. Because scores are only in whole units, an ordinal regression model seemed as if it could have been appropriate. However, because there are an unbounded amount of levels, as well as the fact that there are so many levels – many of which have few data points – this approach would not have yielded appropriate results. A mixed linear model is a good approach to model these data with many different groups (the different teams). The downfall to this approach is that it does not give extra weight to the peaks in the score differences between games at 3 and 7, but still the score predictions would be more accurate than an inappropriately used ordinal regression model. Perhaps if there were tens of thousands of data points where each level would be represented numerous times, an ordinal regression would be more appropriate.</p>
+<p>To first assess the best mixed linear models, the models were whittled down based on minimizing the BIC on the full dataset. After finding two models with similar BIC’s but different predictors, the models were compared through k-fold validation. There were a few metrics in this used: error rate between predicted results for the test set and the actual results, and then betting (and bankroll) performance across each of the simulations. The k-fold validation used 100 simulations in order to get a large distribution of bankroll amounts. But, if this k-fold validation was performed as usual, this would leave the test data sets with only 4 data points. Instead, the data was randomly shuffled for each of the 100 iterations, and then broken up into 7 folds – with one fold used as a test data set and the rest as a training dataset.</p>
+</div>
+<div id="simulations" class="section level3">
+<h3><span class="header-section-number">2.2.4</span> Simulations</h3>
+<p>For generating the simulated probabilities of beating the spread for each game in the test dataset, I generated 500 draws from its posterior predictive distribution for each model.</p>
+<div class="figure" style="text-align: center"><span id="fig:unnamed-chunk-27"></span>
+<img src="thesis_files/figure-html/unnamed-chunk-27-1.png" alt="\label{fig:simout}Simulated Outcomes for NYG @ Den Week 6, 2017" width="672" />
+<p class="caption">
+Figure 2.16: Simulated Outcomes for NYG @ Den Week 6, 2017
+</p>
+</div>
+<p>Figure  is a histogram representing the results of the 500 draws from the posterior predictive distribution from the best overall performing model (as will be discussed in section 3.2.5) for an example game in a test dataset for the New York Giants at the Denver Broncos during Week 6, 2017. The vertical black line represents the median of the 500 draws from the posterior predictive distribution, and the vertical red line represents the actual point spread. The median of the simulated outcomes (the vertical black line) is placed at -11.8, meaning the away team, the Giants, are expected to lose this game by 11.8 points. However, the spread (the vertical red line) at our first decision point has the Giants +12.5 points, meaning to beat the spread, the Giants must lose by 12 points or fewer, or win. Thus, at first glance, there seems to be a slight edge on betting on the New York Giants +12.5 because the spread has the Giants losing by 12.5 points, but the model projects the Giants to only lose by 11.8 points.</p>
+<div class="figure" style="text-align: center"><span id="fig:unnamed-chunk-28"></span>
+<img src="thesis_files/figure-html/unnamed-chunk-28-1.png" alt="\label{fig:ecdf}Empirical Cumulative Distribution of Simulated Outcomes for NYG @ DEN Week 6, 2017" width="672" />
+<p class="caption">
+Figure 2.17: Empirical Cumulative Distribution of Simulated Outcomes for NYG @ DEN Week 6, 2017
+</p>
+</div>
+<p>Figure  is the empirical cumulative distribution (ECDF) of the 500 draws from the posterior predictive distribution. The blue represents where the point spread falls in the ECDF. Being either above or below the two redlines means that betting on this game will generate a positive expected value. If the point is below the lower redline, it is advantageous to bet on the away team, and if the point is above the top red line, then it is advantageous to bet on the home team. The interval of these red lines is (0.4762, 0.5238). If the ECDF is below 0.5, the probability of success is 1 - ECDF(Point Spread). Because the casino does not give fair odds, and offers -110 odds, where a bettor must stake 1.1 units to win 1 units, this interval of probabilities generates a negative expected value. The edges of the probability provide an expected value of 0. Expected value is calculated by adding the probability of failure multiplied by -1.1 (the amount of units lost if the bet loses) and the probability of success multiplied by 1 (the amount of units won if the bet wins). Equation  is the equation for expected value.</p>
+<span class="math display">\[\begin{equation}
+  \label{eq:beatspread}
+    P(\text{Beating Spread}) \cdot 1 + (1 - P(\text{Beating Spread})) \cdot -1.1.
+    \end{equation}\]</span>
+<p>Now, to find the probability of success for each game, I found where on the ECDF of the draws from the posterior predictive distribution the current spread falls. For example, the ECDF for this point spread of Giants (+12.5) is <span class="math inline">\(0.478\)</span>, so the probability of the Giants beating the spread is <span class="math inline">\(1 - 0.478 = 0.522\)</span>. The model expects the Giants to beat the spread with a proportion of <span class="math inline">\(0.522\)</span>. The model expects the Broncos to beat the spread with a proportion of 0.478. Since the spread, in this scenario, is 12.5, and not a full number, there is no probability of a push, or tying the spread.</p>
+<p>After generating a probability of success, the expected value can be calculated. Since one must bet 1.1 units to win 1 unit, the expected value is <span class="math inline">\(0.522 - ((1-0.522) \cdot 1.1) = -0.0038\)</span>. Betting on the Broncos is even more disadvantageous, as their expected value is <span class="math inline">\(0.478 - ((1-0.478) \cdot 1.1) = -0.0962\)</span>.</p>
+<p>In this scenario, the model suggests a negative expected value of betting on the Giants with this spread of -0.0038 units lost per unit bet. There is a negative expected value for betting on both teams! So, because of the negative expected value, there will be no bet on the game at this point. However, the forecasted spread impacts whether there may be a bet at a future time point.</p>
+<div class="figure" style="text-align: center"><span id="fig:unnamed-chunk-29"></span>
+<img src="thesis_files/figure-html/unnamed-chunk-29-1.png" alt="\label{fig:forewitint}Forecasted Spread for the NYG @ DEN Week 6, 2017 with 80% Interval" width="672" />
+<p class="caption">
+Figure 2.18: Forecasted Spread for the NYG @ DEN Week 6, 2017 with 80% Interval
+</p>
+</div>
+<p>Figure  shows the forecasted spread up until projected game time for the Giants and Broncos game. The 80% interval is using a rounded spread, to the nearest one-half, to calculate my interval. The forecasted spread predicts an 80% confidence interval of (13.0, 14.5) for this spread about 20 data points into the 32 point forecast. The current decision point spread of 12.5 is outside of this interval. The expected value changes once the spread enters my interval. The Empirical Cumulative Distribution for the Giants when the spread is Giants (+13) is 0.47 meaning the simulated probability is <span class="math inline">\(1 - 0.47 = 0.53\)</span>. The new expected value is <span class="math inline">\(0.53 - ((1-0.53) \times 1.1) = 0.013\)</span>. Thus, if the spread does move within my interval at any point, I will bet.</p>
+<p>This is an extremely small edge. However, the spread does actually move to 13.0, so there would be a bet on the Giants. However, the 80% interval later moves even further to (13.5, 15.5) about 30 index points into the forecast. The new ECDF of Giants (+13.5) is 0.45, meaning the new simulated probability is 0.55 and the new expected value is 0.055. The level of confidence that the spread will move to Giants (+13.5) is only 80%, but <span class="math inline">\(0.055 \times 0.8 &gt; 0.013\)</span>, so at the first point of positive expected value, I choose that my bet is only one-third of the total allotment. For example, if the bet allotment for this game is 15 units, I would place a 5 unit bet on the Giants (+13). The other two-thirds of the allotment will be placed if the spread enters my interval and hits 13.5. In actuality, the spread does move to Giants (+13.5). So, two-thirds of the bet allotment – or 10 units – is placed at Giants (+13.5).</p>
+<p>This ended up being extremely important because the Giants actually lost the game by 13 points, so a bet on the Giants at (+12.5) would have lost money, while the 5 unit bet on the Giants +13 is a push, meaning the money is returned, and the 10 unit bet at Giants +13.5 wins and returns a profit of <span class="math inline">\((10 / 1.1) = 9.09\)</span> units!</p>
+<p>This was the process I went through for each game in the test data set for each model, as there were different probabilities of beating the spread from the two different models. For comparison, I used a simple method from a simple multiple linear regression, where the point estimate was generated directly through utilizing the mean and variance of the predicted value from the formula to calculate the t-value of the point spread and the using the t-distribution to find a probability estimate. One row of my test data set with the probabilities included is displayed in the Section  of the Appendix.</p>
+</div>
+<div id="model-selection-1" class="section level3">
+<h3><span class="header-section-number">2.2.5</span> Model Selection</h3>
+<p>There were two models that provided similar results of BIC on the full datasets. Both models used the away team as a random effect, and used the decision point spread as a predictor. But, the first model delves into more team-specific stats, such as win percentages, number of wins and the weighted DVOA, in order to best predict who will win. I will refer to this model as the “team-specific” model. The second model tends to look more at the betting trends, such as the log of the tickets and cash bet for both the away and home team, and the difference between the cash and ticket percentage (this model also uses the difference between the teams’ weighted DVOA). for its predictors. The second model also uses the year as a random effect. This model will be referred to as the “betting-trends” model When looking to incorporate certain additional variables into the other models, the BIC rises.</p>
+<p>The team-specific model is shown in Equations  — .</p>
+<span class="math display">\[\begin{eqnarray}
+  &amp;\notag \text{for}  \ i \ \text{in} \ 1 \ , \  ... \ , \ 414 \ \text{and} \ j  \ \text{in} \  1, \ ... \ , \ 32 \\
+  &amp;\hat{\text{Away Score - Home Score}_i} = \alpha_{j [i]}^{\text{away team}} + \boldsymbol{\beta}^{&#39;} \cdot \textbf{X}_i + \epsilon_i \label{eq:lmer11} \\ 
+  &amp;\epsilon_i \sim N(0, \sigma^2_{\text{residuals}}) \label{eq:lmer12} \\ 
+  &amp;\alpha^{\text{away team}}_{j} \sim N(0, \sigma^{2}_{\text{away team}}) \label{eq:lmer13}
+  \end{eqnarray}\]</span>
+**
+
+<p>**</p>
+<div class="figure" style="text-align: center"><span id="fig:unnamed-chunk-32"></span>
+<img src="thesis_files/figure-html/unnamed-chunk-32-1.png" alt="\label{fig:lmer1diag}Residual Plots for Team-Specific Model" width=".49\linewidth" /><img src="thesis_files/figure-html/unnamed-chunk-32-2.png" alt="\label{fig:lmer1diag}Residual Plots for Team-Specific Model" width=".49\linewidth" />
+<p class="caption">
+Figure 2.19: Residual Plots for Team-Specific Model
+</p>
+</div>
+<p>Table  is the output parameters for the Team-Specific model. Figure  is the diagnostic plots for this first model, and the model seems to pass all the diagnostic tests. The residuals tend to be random and non-correlated; the residual plots based on the groups are shown in Section  of the Appendix, but there are no egregious errors.</p>
+<p>The model focusing on betting trends is shown in Equations  — :</p>
+<span class="math display">\[\begin{eqnarray}
+  &amp;\notag \text{for}  \ i \ \text{in} \ 1 \ , \  ... \ , \ 414\text{;} \ j  \ \text{in} \  1, \ ... \ , \ 32 \ \text{and} \ m \ \text{in} \ 2017, 2018 \\ 
+  &amp;\hat{\text{Away Score - Home Score}_i} = \alpha_{j [i]}^{\text{away team}} + \alpha_{m [i]}^{\text{Year}} + \boldsymbol{\beta}^{&#39;} \cdot \textbf{X}_i + \epsilon_i \label{eq:lmer21} \\ 
+  &amp;\epsilon_i \sim N(0, \sigma^2_{\text{residuals}}) \label{eq:lmer22} \\ 
+  &amp;\alpha^{\text{away team}}_{j} \sim N(0, \sigma^{2}_{\text{away team}}) \label{eq:lmer23} \\  
+  &amp;\alpha^{Year}_{m} \sim N(0, \sigma^{2}_{\text{Year}}) \label{eq:lmer24} 
+\end{eqnarray}\]</span>
+
+<div class="figure" style="text-align: center"><span id="fig:unnamed-chunk-33"></span>
+<img src="thesis_files/figure-html/unnamed-chunk-33-1.png" alt="\label{fig:lmer2diag}Residual Plots for Betting-Trends Model" width=".49\linewidth" /><img src="thesis_files/figure-html/unnamed-chunk-33-2.png" alt="\label{fig:lmer2diag}Residual Plots for Betting-Trends Model" width=".49\linewidth" />
+<p class="caption">
+Figure 2.20: Residual Plots for Betting-Trends Model
+</p>
+</div>
+<p>Table  displays the parameters for the Betting-Trend model. This model also seems to pass all the diagnostic tests, shown in Figure , as the residuals tend to be random and non-correlated. The residual plots based on the groups are shown in Section  of the Appendix, but there are no egregious errors.</p>
+<p>The mixed-linear models are appropriate for modeling these data, and k-fold validation using 100 test data sets is used to evaluate the models. It is possible that the models have different strengths and weaknesses, in terms of risk and reward, and this can be examined through looking at the distribution of winnings.</p>
+</div>
+</div>
+</div>
+            </section>
+
+          </div>
+        </div>
+      </div>
+<a href="index.html" class="navigation navigation-prev " aria-label="Previous page"><i class="fa fa-angle-left"></i></a>
+<a href="3-betting-strategy.html" class="navigation navigation-next " aria-label="Next page"><i class="fa fa-angle-right"></i></a>
+    </div>
+  </div>
+<script src="libs/gitbook-2.6.7/js/app.min.js"></script>
+<script src="libs/gitbook-2.6.7/js/lunr.js"></script>
+<script src="libs/gitbook-2.6.7/js/plugin-search.js"></script>
+<script src="libs/gitbook-2.6.7/js/plugin-sharing.js"></script>
+<script src="libs/gitbook-2.6.7/js/plugin-fontsettings.js"></script>
+<script src="libs/gitbook-2.6.7/js/plugin-bookdown.js"></script>
+<script src="libs/gitbook-2.6.7/js/jquery.highlight.js"></script>
+<script>
+gitbook.require(["gitbook"], function(gitbook) {
+gitbook.start({
+"sharing": {
+"github": false,
+"facebook": true,
+"twitter": true,
+"google": false,
+"linkedin": false,
+"weibo": false,
+"instapaper": false,
+"vk": false,
+"all": ["facebook", "google", "twitter", "linkedin", "weibo", "instapaper"]
+},
+"fontsettings": {
+"theme": "white",
+"family": "sans",
+"size": 2
+},
+"edit": {
+"link": null,
+"text": null
+},
+"history": {
+"link": null,
+"text": null
+},
+"download": [["thesis.pdf", "PDF"], ["thesis.epub", "EPUB"], ["thesis.docx", "Word"]],
+"toc": {
+"collapse": "section"
+}
+});
+});
+</script>
+
+<!-- dynamically load mathjax for compatibility with self-contained -->
+<script>
+  (function () {
+    var script = document.createElement("script");
+    script.type = "text/javascript";
+    var src = "";
+    if (src === "" || src === "true") src = "https://mathjax.rstudio.com/latest/MathJax.js?config=TeX-MML-AM_CHTML";
+    if (location.protocol !== "file:" && /^https?:/.test(src))
+      src = src.replace(/^https?:/, '');
+    script.src = src;
+    document.getElementsByTagName("head")[0].appendChild(script);
+  })();
+</script>
+</body>
+
+</html>

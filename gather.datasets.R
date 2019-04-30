@@ -1,10 +1,27 @@
 #get dataset with consensus picks
 
-nfl_scores <- read_xlsx("nfl.xlsx", sheet = "Data")
+library(lattice)
+library(readxl)
+library(dlm)
+library(MASS)
+library(tidyverse)
+library(lme4)
+library(merTools)
+library(forecast)
+library(plyr)
+library(ggpubr)
+library(stargazer)
+library(rvest)
+library(kableExtra)
+library(reshape2)
+library(ggplot2)
+library(extrafont)
+
+nfl_scores <- read_xlsx("BeatingVegasData/nfl.xlsx", sheet = "Data")
 nfl_scores2018 <- nfl_scores[as.numeric(format(nfl_scores$Date,'%Y')) == 2018 | 
                                as.numeric(format(nfl_scores$Date,'%Y')) == 2017 
                              & as.numeric(format(nfl_scores$Date,'%m')) >= 3, c(1:8, 21, 24)]
-nfl_teams <- read.csv("nfl_teams.csv")
+nfl_teams <- read.csv("BeatingVegasData/nfl_teams.csv")
 nfl_teams$Name <- gsub("NY", "New York", nfl_teams$Name)
 nfl_teams$Name <- gsub("St. Louis", "Los Angeles", nfl_teams$Name)
 nfl_teams$Name <- gsub("San Diego", "Los Angeles", nfl_teams$Name)
@@ -33,7 +50,7 @@ left = function (string,char){
 
 df <- data.frame()
 for (i in 1:nrow(nfl_scores2018)){
-  a <- read_xlsx(paste0(nfl_scores2018$Year[i], "/Week", nfl_scores2018$Week[i], ".xlsx"), sheet = list_of_games[i])
+  a <- read_xlsx(paste0("BeatingVegasData/", nfl_scores2018$Year[i], "/Week", nfl_scores2018$Week[i], ".xlsx"), sheet = list_of_games[i])
   colnames(a) <- c("Date", "Time", "Odds", "away_cash_bet", "away_cash_percent", "away_ticket_num",
                    "away_ticket_percent", "away_pick_num", "away_pick_percent")
   a$game <- list_of_games[i]

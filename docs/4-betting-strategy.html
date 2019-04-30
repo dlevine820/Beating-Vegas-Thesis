@@ -47,6 +47,7 @@
 
 
 
+<script src="libs/kePrint-0.0.1/kePrint.js"></script>
 
 
 
@@ -75,9 +76,9 @@
 <li class="chapter" data-level="3.2" data-path="3-modeling.html"><a href="3-modeling.html#game-result-prediction"><i class="fa fa-check"></i><b>3.2</b> Game Result Prediction</a><ul>
 <li class="chapter" data-level="3.2.1" data-path="3-modeling.html"><a href="3-modeling.html#overview-of-decisions"><i class="fa fa-check"></i><b>3.2.1</b> Overview of Decisions</a></li>
 <li class="chapter" data-level="3.2.2" data-path="3-modeling.html"><a href="3-modeling.html#exploratory-data-analysis-1"><i class="fa fa-check"></i><b>3.2.2</b> Exploratory Data Analysis</a></li>
-<li class="chapter" data-level="3.2.3" data-path="3-modeling.html"><a href="3-modeling.html#model-selection"><i class="fa fa-check"></i><b>3.2.3</b> Model Selection</a></li>
+<li class="chapter" data-level="3.2.3" data-path="3-modeling.html"><a href="3-modeling.html#model-approach"><i class="fa fa-check"></i><b>3.2.3</b> Model Approach</a></li>
 <li class="chapter" data-level="3.2.4" data-path="3-modeling.html"><a href="3-modeling.html#simulations"><i class="fa fa-check"></i><b>3.2.4</b> Simulations</a></li>
-<li class="chapter" data-level="3.2.5" data-path="3-modeling.html"><a href="3-modeling.html#model-selection-1"><i class="fa fa-check"></i><b>3.2.5</b> Model Selection</a></li>
+<li class="chapter" data-level="3.2.5" data-path="3-modeling.html"><a href="3-modeling.html#model-selection"><i class="fa fa-check"></i><b>3.2.5</b> Model Selection</a></li>
 </ul></li>
 </ul></li>
 <li class="chapter" data-level="4" data-path="4-betting-strategy.html"><a href="4-betting-strategy.html"><i class="fa fa-check"></i><b>4</b> Betting Strategy</a><ul>
@@ -85,10 +86,10 @@
 </ul></li>
 <li class="chapter" data-level="5" data-path="5-discussion.html"><a href="5-discussion.html"><i class="fa fa-check"></i><b>5</b> Discussion</a></li>
 <li class="chapter" data-level="6" data-path="6-appendix.html"><a href="6-appendix.html"><i class="fa fa-check"></i><b>6</b> Appendix</a><ul>
-<li class="chapter" data-level="6.1" data-path="6-appendix.html"><a href="6-appendix.html#example-row-of-dataframe-used-for-modeling-the-game-score"><i class="fa fa-check"></i><b>6.1</b> Example Row of Dataframe used for Modeling the Game Score</a></li>
-<li class="chapter" data-level="6.2" data-path="6-appendix.html"><a href="6-appendix.html#modeling-number-of-observations-1"><i class="fa fa-check"></i><b>6.2</b> Modeling Number of Observations</a></li>
-<li class="chapter" data-level="6.3" data-path="6-appendix.html"><a href="6-appendix.html#example-row-of-test-data-set-with-probabilities"><i class="fa fa-check"></i><b>6.3</b> Example Row of Test Data set with Probabilities</a></li>
-<li class="chapter" data-level="6.4" data-path="6-appendix.html"><a href="6-appendix.html#diagnostics-for-random-effects-in-mixed-linear-models-for-the-score-difference"><i class="fa fa-check"></i><b>6.4</b> Diagnostics for Random Effects in Mixed-Linear Models for the Score Difference</a></li>
+<li class="chapter" data-level="6.1" data-path="6-appendix.html"><a href="6-appendix.html#appen1"><i class="fa fa-check"></i><b>6.1</b> Example Row of Dataframe used for Modeling the Game Score</a></li>
+<li class="chapter" data-level="6.2" data-path="6-appendix.html"><a href="6-appendix.html#appen2"><i class="fa fa-check"></i><b>6.2</b> Modeling Number of Observations</a></li>
+<li class="chapter" data-level="6.3" data-path="6-appendix.html"><a href="6-appendix.html#appen3"><i class="fa fa-check"></i><b>6.3</b> Example Row of Test Data set with Probabilities</a></li>
+<li class="chapter" data-level="6.4" data-path="6-appendix.html"><a href="6-appendix.html#appen4"><i class="fa fa-check"></i><b>6.4</b> Diagnostics for Random Effects in Mixed-Linear Models for the Score Difference</a></li>
 </ul></li>
 <li class="chapter" data-level="7" data-path="7-references.html"><a href="7-references.html"><i class="fa fa-check"></i><b>7</b> References</a></li>
 <li class="divider"></li>
@@ -118,22 +119,22 @@
 <p>The Martingale betting system is another popular method. This betting system starts by betting a certain amount of units (in this case, 5 units). If the bet loses, the subsequent bet doubles, so that winning the bet leaves the bettor ahead by 5 units. If the second bet instead loses again, the third bet once again double – now to 20 units. This keeps on going until either the bankroll is empty or the bettor is ahead 5 units. This is a risky strategy.</p>
 <p>One strategy simply bets 15 units any time there is a positive expected value. Another strategy only bets when there is an extreme edge; the bet is 10 units if the expected value is above 0.1 and 20 units if the expected values is above 0.2.</p>
 <p>Finally, another betting system relied on the agreement of the two linear mixed models. If both models suggested betting on the same team, and each expected value is positive, then the system bets on this team. Betting amounts are determined with the Kelly Criterion, and the Kelly proportion is the average of the two different expected values generated from the different models.</p>
-<p>The different betting systems are listed in Table .</p>
+<p>The different betting systems are listed in Table <a href="#tab:bstrategy"><strong>??</strong></a>.</p>
 
 <div id="results-using-k-fold-validation" class="section level2">
 <h2><span class="header-section-number">4.1</span> Results Using K-Fold Validation</h2>
-<div class="figure" style="text-align: center"><span id="fig:unnamed-chunk-34"></span>
-<img src="thesis_files/figure-html/unnamed-chunk-34-1.png" alt="\label{fig:boxplot}Final Bankroll Box Plots by Strategy" width="864" />
+<div class="figure" style="text-align: center"><span id="fig:boxplot"></span>
+<img src="thesis_files/figure-html/boxplot-1.png" alt="Final Bankroll Box Plots by Strategy" width="864" />
 <p class="caption">
 Figure 4.1: Final Bankroll Box Plots by Strategy
 </p>
 </div>
 <p>For each game in each test data set, the model went through the process outlined above for each betting strategy. After iterating through all the games in the test data set, I was left with the final bankroll from each model for each test data set in the k-fold. With 100 test data sets, I had a vector of 100 final bankrolls for each of the nine betting strategies.</p>
-<p>Figure  is a boxplot looking at the distribution of the final bankrolls for each of the betting strategies over the 100 simulations. Most of the strategies have medians above 100, meaning they generated positive median returns. In addition, these distributions have a boundary on the low end of 0, as the strategy cannot end with a bankroll below 0, but with no maximum, the distributions tend to be right-skewed, leaving the means higher than the medians.</p>
-<p>Table  shows the mean and median final bankrolls over the 100 simulations for the different methods. Four of the methods stand out; the K1 method, Martingale, Extreme Edge - Simple Bets and the LMER Agreement method. Outside of the Martingale method, which is interesting because this is the only strategy where the mean is significantly  than the median, the other listed methods are noteworthy because of the huge returns – each of those three methods have mean returns above 35%.</p>
+<p>Figure <a href="4-betting-strategy.html#fig:boxplot">4.1</a> is a boxplot looking at the distribution of the final bankrolls for each of the betting strategies over the 100 simulations. Most of the strategies have medians above 100, meaning they generated positive median returns. In addition, these distributions have a boundary on the low end of 0, as the strategy cannot end with a bankroll below 0, but with no maximum, the distributions tend to be right-skewed, leaving the means higher than the medians.</p>
+<p>Table <a href="4-betting-strategy.html#tab:meanstrat">4.1</a> shows the mean and median final bankrolls over the 100 simulations for the different methods. Four of the methods stand out; the K1 method, Martingale, Extreme Edge - Simple Bets and the LMER Agreement method. Outside of the Martingale method, which is interesting because this is the only strategy where the mean is significantly  than the median, the other listed methods are noteworthy because of the huge returns – each of those three methods have mean returns above 35%.</p>
 <table>
 <caption>
-<span id="tab:unnamed-chunk-35">Table 4.1: </span>Mean Final Bankroll vs. Strategy
+<span id="tab:meanstrat">Table 4.1: </span>Mean Final Bankroll vs. Strategy
 </caption>
 <thead>
 <tr>
@@ -249,10 +250,10 @@ LMER.Agreement
 </tr>
 </tbody>
 </table>
-<p>Table  displays the summary statistics for the 4 top methods; the team-specific model using Kelly Criterion for betting amounts, the Martingale method, the Extreme Edge with Simple Bets and the Agreement method. The highest median is this K1 method. All these methods used the team-specific model to generate probabilities of beating the spread. The returns are very high in each of the quartiles, with positive returns for over 75% of simulations for the Extreme Edge with Simple Bets and Martingale methods. However, these are both the riskiest methods, as in 5% and 15%, respectively for each method, the bettor would have lost the entire bankroll using these methods. This is a very high chance relative to most other more standard investments in the stock market.</p>
+<p>Table <a href="4-betting-strategy.html#tab:topsum">4.2</a> displays the summary statistics for the 4 top methods; the team-specific model using Kelly Criterion for betting amounts, the Martingale method, the Extreme Edge with Simple Bets and the Agreement method. The highest median is this K1 method. All these methods used the team-specific model to generate probabilities of beating the spread. The returns are very high in each of the quartiles, with positive returns for over 75% of simulations for the Extreme Edge with Simple Bets and Martingale methods. However, these are both the riskiest methods, as in 5% and 15%, respectively for each method, the bettor would have lost the entire bankroll using these methods. This is a very high chance relative to most other more standard investments in the stock market.</p>
 <table>
 <caption>
-<span id="tab:unnamed-chunk-36">Table 4.2: </span>Summary Statistics for the Best Performing Methods
+<span id="tab:topsum">Table 4.2: </span>Summary Statistics for the Best Performing Methods
 </caption>
 <thead>
 <tr>
@@ -281,7 +282,7 @@ Max.
 <tbody>
 <tr>
 <td style="text-align:left;">
-K1
+Kelly Criterion
 </td>
 <td style="text-align:right;">
 8.78
@@ -304,7 +305,7 @@ K1
 </tr>
 <tr>
 <td style="text-align:left;">
-Extreme_Edge_Simple
+Extreme Edge - Simple
 </td>
 <td style="text-align:right;">
 0.00
@@ -327,7 +328,7 @@ Extreme_Edge_Simple
 </tr>
 <tr>
 <td style="text-align:left;">
-LMER_Agree
+Model Agreement
 </td>
 <td style="text-align:right;">
 20.31
@@ -350,7 +351,7 @@ LMER_Agree
 </tr>
 <tr>
 <td style="text-align:left;">
-Martingale_Method
+Martingale
 </td>
 <td style="text-align:right;">
 0.00
@@ -373,13 +374,13 @@ Martingale_Method
 </tr>
 </tbody>
 </table>
-<div class="figure" style="text-align: center"><span id="fig:unnamed-chunk-37"></span>
-<img src="thesis_files/figure-html/unnamed-chunk-37-1.png" alt="\label{fig:densplot}Density Plots comparing Four Successful Betting Strategies" width="480" />
+<div class="figure" style="text-align: center"><span id="fig:densplot"></span>
+<img src="thesis_files/figure-html/densplot-1.png" alt="Density Plots comparing Four Successful Betting Strategies" width="480" />
 <p class="caption">
 Figure 4.2: Density Plots comparing Four Successful Betting Strategies
 </p>
 </div>
-<p>Figure  shows the density plots for the 100 final bankrolls from the top four methods. The dotted lines represent the medians of each distribution. There seems to only be 3 dotted lines, but the medians for both the K1 and Martingale methods are both 129, so these lines are overlaid. The LMER-Agreement method seems to provide the safest betting strategy, as the density plot does not have as long of a tail, but a larger peak close to 175 units. It makes sense that this method is safest because this method only chooses to bet on games that both models agree on for whom to bet. Thus, a more selective group of games is chosen for bets. The Martingale method has 15% of observations at 0, but based on the nature of the bets, which continue to double if the bettor is losing, if the bettor does not lose the entire bankroll, it is a near guarantee to make money. The K1 and Extreme Edge - Simple methods both have extremely long tails and provide riskier investments than the LMER agreement methods, but also higher mean and median returns.</p>
+<p>Figure <a href="4-betting-strategy.html#fig:densplot">4.2</a> shows the density plots for the 100 final bankrolls from the top four methods. The dotted lines represent the medians of each distribution. There seems to only be 3 dotted lines, but the medians for both the K1 and Martingale methods are both 129, so these lines are overlaid. The LMER-Agreement method seems to provide the safest betting strategy, as the density plot does not have as long of a tail, but a larger peak close to 175 units. It makes sense that this method is safest because this method only chooses to bet on games that both models agree on for whom to bet. Thus, a more selective group of games is chosen for bets. The Martingale method has 15% of observations at 0, but based on the nature of the bets, which continue to double if the bettor is losing, if the bettor does not lose the entire bankroll, it is a near guarantee to make money. The K1 and Extreme Edge - Simple methods both have extremely long tails and provide riskier investments than the LMER agreement methods, but also higher mean and median returns.</p>
 </div>
 </div>
             </section>
